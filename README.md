@@ -50,3 +50,16 @@ Requires Node 20 (`engines.node` is `>=20`).
 npm install
 npm run dev
 npm test
+npm run typecheck
+npm run build
+```
+
+## Seed
+
+Deterministic harbor `maritime-port-platform`: sixteen vessel calls
+`MP-0001`…`MP-0016` (Harbor Star, Cedar Wave, Metro Tide, Oak Current, and
+twelve peers), berths `B-12` and `Q-3`, ISO boxes `MSCU…`.
+
+## License
+
+MIT © EnyewAnberbir 2015
