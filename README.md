@@ -30,3 +30,23 @@ then payload.
 
 | Op | Code |
 | --- | --- |
+| none | 0 |
+| vessel | 1 |
+| berth | 2 |
+| cargo | 3 |
+| customs | 4 |
+| seal | 5 |
+| recover | 6 |
+| compact | 7 |
+| extend | 8 |
+| query | 9 |
+| export_op | 10 |
+
+## Scripts
+
+Requires Node 20 (`engines.node` is `>=20`).
+
+```bash
+npm install
+npm run dev
+npm test
