@@ -1,0 +1,9 @@
+node_modules
+dist
+.git
+.github
+coverage
+*.tsbuildinfo
+.DS_Store
+package-lock.json
+slices.json
