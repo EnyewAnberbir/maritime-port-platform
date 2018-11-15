@@ -19,3 +19,23 @@ export type CallRow = {
   vessel: string;
   berth: string;
   state: CallState;
+  risk: Risk;
+  flagged: boolean;
+  eta: string;
+  boxes: number;
+};
+
+export type VesselCall = {
+  id: number;
+  reference: string;
+  imo: string;
+  name: string;
+  eta: string;
+  draftDm: number;
+  state: CallState;
+  risk: Risk;
+  flagged: boolean;
+  berthId: string;
+  windowId: number | null;
+  sealed: boolean;
+};
