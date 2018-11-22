@@ -39,3 +39,17 @@ export type VesselCall = {
   windowId: number | null;
   sealed: boolean;
 };
+
+export function toCallRow(call: VesselCall, boxes: number): CallRow {
+  return {
+    id: call.id,
+    reference: call.reference,
+    vessel: call.name,
+    berth: call.berthId,
+    state: call.state,
+    risk: call.risk,
+    flagged: call.flagged,
+    eta: call.eta,
+    boxes,
+  };
+}
