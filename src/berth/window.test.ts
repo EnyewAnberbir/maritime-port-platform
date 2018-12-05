@@ -23,3 +23,21 @@ describe("berth overlap", () => {
   it("allows the same clock on a different berth", () => {
     expect(
       windowsOverlap(
+        { berthId: "B-12", startMin: 0, endMin: 100 },
+        { berthId: "Q-3", startMin: 0, endMin: 100 },
+      ),
+    ).toBe(false);
+  });
+});
+
+describe("acceptTransition", () => {
+  it("mirrors Zig generation flags", () => {
+    expect(acceptTransition(8, 3, 0)).toBe(false);
+    expect(acceptTransition(8, 3, BERTH_FLAG_ALLOW_BACK)).toBe(true);
+    expect(acceptTransition(4, 4, 0)).toBe(true);
+    expect(acceptTransition(4, 4, BERTH_FLAG_REJECT_STAY)).toBe(false);
+    expect(acceptTransition(1, 70, 0)).toBe(true);
+    expect(acceptTransition(1, 70, BERTH_FLAG_CAP_JUMP)).toBe(false);
+    expect(acceptTransition(1, 60, BERTH_FLAG_CAP_JUMP)).toBe(true);
+  });
+});
