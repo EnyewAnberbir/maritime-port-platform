@@ -19,3 +19,22 @@ export type BerthWindow = {
 };
 
 /**
+ * Port of Zig generation accept: flag 1 allows a backward generation,
+ * flag 2 rejects a stay, flag 4 rejects a jump larger than 64.
+ */
+export function acceptTransition(prev: number, next: number, flags: number): boolean {
+  const prevU = prev >>> 0;
+  const nextU = next >>> 0;
+  if (nextU < prevU && (flags & BERTH_FLAG_ALLOW_BACK) === 0) {
+    return false;
+  }
+  if ((flags & BERTH_FLAG_REJECT_STAY) !== 0 && nextU === prevU) {
+    return false;
+  }
+  if ((flags & BERTH_FLAG_CAP_JUMP) !== 0 && nextU > ((prevU + 64) >>> 0)) {
+    return false;
+  }
+  return true;
+}
+
+export function windowsOverlap(a: Pick<BerthWindow, "berthId" | "startMin" | "endMin">, b: Pick<BerthWindow, "berthId" | "startMin" | "endMin">): boolean {
