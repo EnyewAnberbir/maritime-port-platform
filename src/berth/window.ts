@@ -38,3 +38,23 @@ export function acceptTransition(prev: number, next: number, flags: number): boo
 }
 
 export function windowsOverlap(a: Pick<BerthWindow, "berthId" | "startMin" | "endMin">, b: Pick<BerthWindow, "berthId" | "startMin" | "endMin">): boolean {
+  if (a.berthId !== b.berthId) {
+    return false;
+  }
+  return a.startMin < b.endMin && b.startMin < a.endMin;
+}
+
+export function assertWindowSpan(startMin: number, endMin: number): void {
+  if (endMin <= startMin) {
+    throw new Error("berth window end must be after start");
+  }
+  if (endMin - startMin > 7 * 24 * 60) {
+    throw new Error("berth window longer than seven days");
+  }
+}
+
+export function teuDensity(quayM: number, vesselTeu: number): number {
+  if (quayM === 0) {
+    return 0;
+  }
+  return Math.floor((vesselTeu * 1000) / quayM);
