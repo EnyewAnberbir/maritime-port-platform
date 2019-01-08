@@ -58,3 +58,23 @@ export function teuDensity(quayM: number, vesselTeu: number): number {
     return 0;
   }
   return Math.floor((vesselTeu * 1000) / quayM);
+}
+
+export function yardOccupancy(quayM: number, blockTeu: number): number {
+  if (quayM === 0) {
+    return 0;
+  }
+  return Math.floor((blockTeu * 100) / quayM);
+}
+
+export function draftClearanceOk(channelDm: number, vesselDm: number): boolean {
+  return channelDm >= vesselDm;
+}
+
+export function chassisDemand(moves: number, rateNum: number, rateDen: number): number {
+  if (rateDen === 0) {
+    return moves;
+  }
+  return Math.floor((moves * rateNum + rateDen - 1) / rateDen);
+}
+
