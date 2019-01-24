@@ -78,3 +78,23 @@ export function chassisDemand(moves: number, rateNum: number, rateDen: number): 
   return Math.floor((moves * rateNum + rateDen - 1) / rateDen);
 }
 
+/** Port of Zig `domain/berth_math.foldBerthMetrics`. */
+export function foldBerthMetrics(seed: number, quay: number, teu: number, moves: number): number {
+  let hash = (seed ^ teuDensity(quay, teu)) >>> 0;
+  hash ^= yardOccupancy(quay, Math.floor(teu / 2));
+  hash ^= chassisDemand(moves, 3, 2);
+  hash = Math.imul(hash, 0x9e3779b9) >>> 0;
+  return (hash ^ (draftClearanceOk(120, 110) ? 1 : 0)) >>> 0;
+}
+
+export function offerWindow(input: {
+  id: number;
+  berthId: string;
+  callId: number;
+  startMin: number;
+  endMin: number;
+  flags?: number;
+}): BerthWindow {
+  assertWindowSpan(input.startMin, input.endMin);
+  if (!acceptTransition(0, 1, input.flags ?? 0)) {
+    throw new Error(`berth ${input.berthId} rejected offer transition`);
