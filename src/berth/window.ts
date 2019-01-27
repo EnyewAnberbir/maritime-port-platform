@@ -98,3 +98,23 @@ export function offerWindow(input: {
   assertWindowSpan(input.startMin, input.endMin);
   if (!acceptTransition(0, 1, input.flags ?? 0)) {
     throw new Error(`berth ${input.berthId} rejected offer transition`);
+  }
+  return {
+    id: input.id,
+    berthId: input.berthId,
+    callId: input.callId,
+    startMin: input.startMin,
+    endMin: input.endMin,
+    generation: 1,
+    state: "offered",
+  };
+}
+
+export function holdWindow(window: BerthWindow, flags = 0): BerthWindow {
+  if (window.state !== "offered") {
+    throw new Error(`window ${window.id} is ${window.state}, not offered`);
+  }
+  const nextGen = window.generation + 1;
+  if (!acceptTransition(window.generation, nextGen, flags)) {
+    throw new Error(`window ${window.id} rejected hold transition`);
+  }
