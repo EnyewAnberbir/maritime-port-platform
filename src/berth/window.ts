@@ -118,3 +118,23 @@ export function holdWindow(window: BerthWindow, flags = 0): BerthWindow {
   if (!acceptTransition(window.generation, nextGen, flags)) {
     throw new Error(`window ${window.id} rejected hold transition`);
   }
+  return { ...window, state: "held", generation: nextGen };
+}
+
+export function activateWindow(window: BerthWindow, flags = 0): BerthWindow {
+  if (window.state !== "held" && window.state !== "offered") {
+    throw new Error(`window ${window.id} cannot activate from ${window.state}`);
+  }
+  const nextGen = window.generation + 1;
+  if (!acceptTransition(window.generation, nextGen, flags)) {
+    throw new Error(`window ${window.id} rejected activate transition`);
+  }
+  return { ...window, state: "active", generation: nextGen };
+}
+
+export function releaseWindow(window: BerthWindow): BerthWindow {
+  if (window.state === "released") {
+    return window;
+  }
+  return { ...window, state: "released" };
+}
