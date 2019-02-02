@@ -138,3 +138,23 @@ export function releaseWindow(window: BerthWindow): BerthWindow {
   }
   return { ...window, state: "released" };
 }
+
+export function extendWindow(window: BerthWindow, endMin: number, flags = 0): BerthWindow {
+  if (window.state === "released") {
+    throw new Error(`window ${window.id} is released`);
+  }
+  assertWindowSpan(window.startMin, endMin);
+  const nextGen = window.generation + 1;
+  if (!acceptTransition(window.generation, nextGen, flags)) {
+    throw new Error(`window ${window.id} rejected extend transition`);
+  }
+  return { ...window, endMin, generation: nextGen };
+}
+
+export class WindowBook {
+  private readonly windows = new Map<number, BerthWindow>();
+  private nextId = 1;
+
+  peekNextId(): number {
+    return this.nextId;
+  }
