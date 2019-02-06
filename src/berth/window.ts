@@ -158,3 +158,23 @@ export class WindowBook {
   peekNextId(): number {
     return this.nextId;
   }
+
+  put(window: BerthWindow): BerthWindow {
+    this.rejectOverlap(window);
+    this.windows.set(window.id, { ...window });
+    this.nextId = Math.max(this.nextId, window.id + 1);
+    return this.require(window.id);
+  }
+
+  rejectOverlap(candidate: BerthWindow): void {
+    for (const existing of this.windows.values()) {
+      if (existing.id === candidate.id || existing.state === "released") {
+        continue;
+      }
+      if (windowsOverlap(existing, candidate)) {
+        throw new Error(
+          `berth ${candidate.berthId} overlaps window ${existing.id} (${existing.startMin}-${existing.endMin})`,
+        );
+      }
+    }
+  }
