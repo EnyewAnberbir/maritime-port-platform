@@ -178,3 +178,23 @@ export class WindowBook {
       }
     }
   }
+
+  get(id: number): BerthWindow | undefined {
+    const window = this.windows.get(id);
+    return window ? { ...window } : undefined;
+  }
+
+  require(id: number): BerthWindow {
+    const window = this.get(id);
+    if (!window) {
+      throw new Error(`berth window ${id} is not on the book`);
+    }
+    return window;
+  }
+
+  forCall(callId: number): BerthWindow | undefined {
+    return this.all().find((window) => window.callId === callId && window.state !== "released");
+  }
+
+  all(): BerthWindow[] {
+    return [...this.windows.values()].map((window) => ({ ...window })).sort((a, b) => a.id - b.id);
