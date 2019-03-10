@@ -198,3 +198,17 @@ export class WindowBook {
 
   all(): BerthWindow[] {
     return [...this.windows.values()].map((window) => ({ ...window })).sort((a, b) => a.id - b.id);
+  }
+
+  live(): BerthWindow[] {
+    return this.all().filter((window) => window.state !== "released");
+  }
+
+  hydrate(windows: BerthWindow[], nextId: number): void {
+    this.windows.clear();
+    for (const window of windows) {
+      this.windows.set(window.id, { ...window });
+    }
+    this.nextId = nextId;
+  }
+}
