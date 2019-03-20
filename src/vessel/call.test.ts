@@ -23,3 +23,9 @@ describe("vessel calls", () => {
         reference: "MP-0002",
         imo: "9321483",
         name: "Cedar Wave",
+        eta: "2015-03-11T09:30:00.000Z",
+        draftDm: 400,
+      }),
+    ).toThrow(/draft/);
+  });
+});
