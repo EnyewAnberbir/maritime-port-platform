@@ -31,3 +31,23 @@ export function announceCall(input: {
   flagged?: boolean;
 }): VesselCall {
   assertImo(input.imo);
+  if (input.draftDm <= 0 || input.draftDm > 280) {
+    throw new Error(`draft ${input.draftDm} dm is outside channel envelope`);
+  }
+  if (!input.name.trim()) {
+    throw new Error("vessel name is required");
+  }
+  return {
+    id: input.id,
+    reference: input.reference,
+    imo: input.imo,
+    name: input.name.trim(),
+    eta: input.eta,
+    draftDm: input.draftDm,
+    state: "announced",
+    risk: input.risk ?? "low",
+    flagged: input.flagged ?? false,
+    berthId: "",
+    windowId: null,
+    sealed: false,
+  };
