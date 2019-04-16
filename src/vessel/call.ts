@@ -51,3 +51,23 @@ export function announceCall(input: {
     windowId: null,
     sealed: false,
   };
+}
+
+export function assignCallBerth(call: VesselCall, berthId: string, windowId: number): VesselCall {
+  if (call.state === "departed" || call.state === "cancelled") {
+    throw new Error(`cannot berth ${call.reference} in ${call.state}`);
+  }
+  return { ...call, berthId, windowId };
+}
+
+export class CallBook {
+  private readonly calls = new Map<number, VesselCall>();
+  private nextId = 1;
+
+  peekNextId(): number {
+    return this.nextId;
+  }
+
+  put(call: VesselCall): VesselCall {
+    this.calls.set(call.id, { ...call });
+    this.nextId = Math.max(this.nextId, call.id + 1);
