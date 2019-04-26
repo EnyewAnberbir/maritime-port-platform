@@ -71,3 +71,23 @@ export class CallBook {
   put(call: VesselCall): VesselCall {
     this.calls.set(call.id, { ...call });
     this.nextId = Math.max(this.nextId, call.id + 1);
+    return this.require(call.id);
+  }
+
+  get(id: number): VesselCall | undefined {
+    const call = this.calls.get(id);
+    return call ? { ...call } : undefined;
+  }
+
+  require(id: number): VesselCall {
+    const call = this.get(id);
+    if (!call) {
+      throw new Error(`vessel call ${id} is not on the book`);
+    }
+    return call;
+  }
+
+  byRef(reference: string): VesselCall | undefined {
+    return this.all().find((call) => call.reference === reference);
+  }
+
