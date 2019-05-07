@@ -91,3 +91,22 @@ export class CallBook {
     return this.all().find((call) => call.reference === reference);
   }
 
+  patch(id: number, patch: Partial<VesselCall>): VesselCall {
+    const current = this.require(id);
+    const next = { ...current, ...patch, id: current.id };
+    this.calls.set(id, next);
+    return { ...next };
+  }
+
+  all(): VesselCall[] {
+    return [...this.calls.values()].map((call) => ({ ...call })).sort((a, b) => a.id - b.id);
+  }
+
+  rows(boxCounts: Map<number, number>): ReturnType<typeof toCallRow>[] {
+    return this.all().map((call) => toCallRow(call, boxCounts.get(call.id) ?? 0));
+  }
+
+  hydrate(calls: VesselCall[], nextId: number): void {
+    this.calls.clear();
+    for (const call of calls) {
+      this.calls.set(call.id, { ...call });
