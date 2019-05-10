@@ -110,3 +110,13 @@ export class CallBook {
     this.calls.clear();
     for (const call of calls) {
       this.calls.set(call.id, { ...call });
+    }
+    this.nextId = nextId;
+  }
+}
+
+export function defaultReference(id: number): string {
+  return `MP-${String(id).padStart(4, "0")}`;
+}
+
+export type { CallState, VesselCall };
