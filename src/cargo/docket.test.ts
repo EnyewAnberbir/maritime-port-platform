@@ -27,3 +27,15 @@ describe("cargo VGM", () => {
       }),
     ).toThrow(/SOLAS/);
   });
+
+  it("rejects a mass above the ISO rating", () => {
+    expect(
+      vgmAcceptable({
+        isoSize: "20",
+        vgmKg: 40000,
+        tareKg: 2200,
+        laden: true,
+      }),
+    ).toBe(false);
+  });
+});
