@@ -25,3 +25,23 @@ export function isIsoBox(box: string): boolean {
   return ISO_BOX.test(box);
 }
 
+export function assertIsoBox(box: string): void {
+  if (!isIsoBox(box)) {
+    throw new Error(`box ${box} is not an ISO 6346 owner/serial`);
+  }
+}
+
+export function assertHazmatClass(hazmatClass: string): void {
+  if (hazmatClass === "") {
+    return;
+  }
+  if (!/^[1-9](\.[1-6])?$/.test(hazmatClass)) {
+    throw new Error(`hazmat class ${hazmatClass} is not an IMDG division`);
+  }
+}
+
+/** SOLAS VGM: laden boxes need verified mass above tare; empty may equal tare. */
+export function vgmAcceptable(docket: Pick<CargoDocket, "vgmKg" | "tareKg" | "laden" | "isoSize">): boolean {
+  if (docket.tareKg <= 0 || docket.tareKg > 8000) {
+    return false;
+  }
