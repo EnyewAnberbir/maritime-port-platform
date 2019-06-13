@@ -45,3 +45,23 @@ export function vgmAcceptable(docket: Pick<CargoDocket, "vgmKg" | "tareKg" | "la
   if (docket.tareKg <= 0 || docket.tareKg > 8000) {
     return false;
   }
+  if (docket.vgmKg > MAX_VGM[docket.isoSize]) {
+    return false;
+  }
+  if (!docket.laden) {
+    return docket.vgmKg === docket.tareKg;
+  }
+  return docket.vgmKg >= docket.tareKg + 100;
+}
+
+export function assertVgm(docket: Pick<CargoDocket, "vgmKg" | "tareKg" | "laden" | "isoSize" | "box">): void {
+  if (!vgmAcceptable(docket)) {
+    throw new Error(`box ${docket.box} VGM ${docket.vgmKg} kg fails SOLAS check`);
+  }
+}
+
+export function fileDocket(input: {
+  id: number;
+  callId: number;
+  box: string;
+  isoSize: IsoSize;
