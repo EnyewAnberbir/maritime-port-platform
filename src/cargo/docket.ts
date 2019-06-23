@@ -65,3 +65,23 @@ export function fileDocket(input: {
   callId: number;
   box: string;
   isoSize: IsoSize;
+  vgmKg: number;
+  tareKg: number;
+  laden: boolean;
+  hazmatClass?: string;
+}): CargoDocket {
+  assertIsoBox(input.box);
+  assertHazmatClass(input.hazmatClass ?? "");
+  const docket: CargoDocket = {
+    id: input.id,
+    callId: input.callId,
+    box: input.box,
+    isoSize: input.isoSize,
+    vgmKg: input.vgmKg,
+    tareKg: input.tareKg,
+    laden: input.laden,
+    hazmatClass: input.hazmatClass ?? "",
+    state: "planned",
+  };
+  assertVgm(docket);
+  return docket;
