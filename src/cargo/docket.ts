@@ -85,3 +85,23 @@ export function fileDocket(input: {
   };
   assertVgm(docket);
   return docket;
+}
+
+export function declareVgm(docket: CargoDocket, vgmKg: number): CargoDocket {
+  const next = { ...docket, vgmKg };
+  assertVgm(next);
+  return next;
+}
+
+export class DocketBook {
+  private readonly dockets = new Map<string, CargoDocket>();
+  private nextId = 1;
+
+  peekNextId(): number {
+    return this.nextId;
+  }
+
+  put(docket: CargoDocket): CargoDocket {
+    this.dockets.set(docket.box, { ...docket });
+    this.nextId = Math.max(this.nextId, docket.id + 1);
+    return this.require(docket.box);
