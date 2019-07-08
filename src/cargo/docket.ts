@@ -105,3 +105,23 @@ export class DocketBook {
     this.dockets.set(docket.box, { ...docket });
     this.nextId = Math.max(this.nextId, docket.id + 1);
     return this.require(docket.box);
+  }
+
+  get(box: string): CargoDocket | undefined {
+    const docket = this.dockets.get(box);
+    return docket ? { ...docket } : undefined;
+  }
+
+  require(box: string): CargoDocket {
+    const docket = this.get(box);
+    if (!docket) {
+      throw new Error(`docket ${box} is not on the book`);
+    }
+    return docket;
+  }
+
+  patch(box: string, patch: Partial<CargoDocket>): CargoDocket {
+    const current = this.require(box);
+    const next = { ...current, ...patch, box: current.box, id: current.id };
+    this.dockets.set(box, next);
+    return { ...next };
