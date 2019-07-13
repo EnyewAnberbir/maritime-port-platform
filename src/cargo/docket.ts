@@ -125,3 +125,23 @@ export class DocketBook {
     const next = { ...current, ...patch, box: current.box, id: current.id };
     this.dockets.set(box, next);
     return { ...next };
+  }
+
+  all(): CargoDocket[] {
+    return [...this.dockets.values()].map((docket) => ({ ...docket })).sort((a, b) => a.id - b.id);
+  }
+
+  forCall(callId: number): CargoDocket[] {
+    return this.all().filter((docket) => docket.callId === callId);
+  }
+
+  countForCall(callId: number): number {
+    return this.forCall(callId).length;
+  }
+
+  boxCounts(): Map<number, number> {
+    const counts = new Map<number, number>();
+    for (const docket of this.dockets.values()) {
+      counts.set(docket.callId, (counts.get(docket.callId) ?? 0) + 1);
+    }
+    return counts;
