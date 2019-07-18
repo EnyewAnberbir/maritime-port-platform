@@ -145,3 +145,13 @@ export class DocketBook {
       counts.set(docket.callId, (counts.get(docket.callId) ?? 0) + 1);
     }
     return counts;
+  }
+
+  hydrate(dockets: CargoDocket[], nextId: number): void {
+    this.dockets.clear();
+    for (const docket of dockets) {
+      this.dockets.set(docket.box, { ...docket });
+    }
+    this.nextId = nextId;
+  }
+}
