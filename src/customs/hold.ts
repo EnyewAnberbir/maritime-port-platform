@@ -45,3 +45,23 @@ export class CustomsJournal {
     return this.nextId;
   }
 
+  put(hold: CustomsHold): CustomsHold {
+    const open = this.openForBox(hold.box);
+    if (open && open.id !== hold.id) {
+      throw new Error(`box ${hold.box} already under hold ${open.id}`);
+    }
+    this.holds.set(hold.id, { ...hold });
+    this.nextId = Math.max(this.nextId, hold.id + 1);
+    return this.require(hold.id);
+  }
+
+  get(id: number): CustomsHold | undefined {
+    const hold = this.holds.get(id);
+    return hold ? { ...hold } : undefined;
+  }
+
+  require(id: number): CustomsHold {
+    const hold = this.get(id);
+    if (!hold) {
+      throw new Error(`customs hold ${id} is not on the journal`);
+    }
