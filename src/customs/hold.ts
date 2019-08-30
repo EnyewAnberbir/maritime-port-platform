@@ -65,3 +65,23 @@ export class CustomsJournal {
     if (!hold) {
       throw new Error(`customs hold ${id} is not on the journal`);
     }
+    return hold;
+  }
+
+  openForBox(box: string): CustomsHold | undefined {
+    return this.all().find((hold) => hold.box === box && hold.releasedOn === null);
+  }
+
+  isHeld(box: string): boolean {
+    return Boolean(this.openForBox(box));
+  }
+
+  all(): CustomsHold[] {
+    return [...this.holds.values()].map((hold) => ({ ...hold })).sort((a, b) => a.id - b.id);
+  }
+
+  open(): CustomsHold[] {
+    return this.all().filter((hold) => hold.releasedOn === null);
+  }
+
+  hydrate(holds: CustomsHold[], nextId: number): void {
