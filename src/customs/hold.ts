@@ -85,3 +85,10 @@ export class CustomsJournal {
   }
 
   hydrate(holds: CustomsHold[], nextId: number): void {
+    this.holds.clear();
+    for (const hold of holds) {
+      this.holds.set(hold.id, { ...hold });
+    }
+    this.nextId = nextId;
+  }
+}
