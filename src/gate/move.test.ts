@@ -9,3 +9,23 @@ describe("gate moves", () => {
         id: 1,
         direction: "in",
         box: "MSCU1000007",
+        chassis: "bad",
+        callId: 1,
+        movedOn: "2015-03-11T08:00:00.000Z",
+      }),
+    ).toThrow(/chassis/);
+    log.append(
+      recordMove({
+        id: 1,
+        direction: "in",
+        box: "MSCU1000007",
+        chassis: "CH100001",
+        callId: 1,
+        movedOn: "2015-03-11T08:00:00.000Z",
+      }),
+    );
+    expect(log.isInside("MSCU1000007")).toBe(true);
+    expect(() =>
+      log.append(
+        recordMove({
+          id: 2,
