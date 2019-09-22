@@ -29,3 +29,13 @@ describe("gate moves", () => {
       log.append(
         recordMove({
           id: 2,
+          direction: "in",
+          box: "MSCU1000007",
+          chassis: "CH100002",
+          callId: 1,
+          movedOn: "2015-03-11T09:00:00.000Z",
+        }),
+      ),
+    ).toThrow(/already gated in/);
+  });
+});
