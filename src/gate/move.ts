@@ -47,3 +47,23 @@ export class GateLog {
     }
     if (move.direction === "out" && last?.direction !== "in") {
       throw new Error(`box ${move.box} cannot gate out before gate in`);
+    }
+    this.moves.push({ ...move });
+    this.nextId = Math.max(this.nextId, move.id + 1);
+    return { ...move };
+  }
+
+  lastForBox(box: string): GateMove | undefined {
+    return [...this.moves].reverse().find((move) => move.box === box);
+  }
+
+  isInside(box: string): boolean {
+    return this.lastForBox(box)?.direction === "in";
+  }
+
+  all(): GateMove[] {
+    return this.moves.map((move) => ({ ...move }));
+  }
+
+  hydrate(moves: GateMove[], nextId: number): void {
+    this.moves.length = 0;
