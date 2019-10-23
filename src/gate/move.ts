@@ -67,3 +67,9 @@ export class GateLog {
 
   hydrate(moves: GateMove[], nextId: number): void {
     this.moves.length = 0;
+    for (const move of moves) {
+      this.moves.push({ ...move });
+    }
+    this.nextId = nextId;
+  }
+}
