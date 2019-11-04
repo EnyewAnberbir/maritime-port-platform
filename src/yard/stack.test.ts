@@ -11,3 +11,11 @@ describe("yard stacks", () => {
     const result = yard.compact();
     expect(result.dropped).toBe(1);
     expect(yard.all()).toHaveLength(0);
+  });
+
+  it("rejects a second box in the same cell", () => {
+    const yard = new YardMap();
+    yard.place("MSCU1000007", "RTG-A", 2, 1, 1);
+    expect(() => yard.place("MSCU2000001", "RTG-A", 2, 1, 1)).toThrow(/occupied/);
+  });
+});
