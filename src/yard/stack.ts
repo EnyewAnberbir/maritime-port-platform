@@ -29,3 +29,23 @@ export function assertSlotInBlock(block: RtgBlock, slot: Pick<YardSlot, "bay" | 
   }
   if (slot.row < 1 || slot.row > block.rows) {
     throw new Error(`row ${slot.row} outside ${block.id}`);
+  }
+  if (slot.tier < 1 || slot.tier > block.tiers) {
+    throw new Error(`tier ${slot.tier} outside ${block.id}`);
+  }
+}
+
+export class YardMap {
+  private readonly blocks = new Map<string, RtgBlock>();
+  private readonly slots = new Map<string, YardSlot>();
+
+  constructor(blocks: RtgBlock[] = DEFAULT_BLOCKS) {
+    for (const block of blocks) {
+      this.blocks.set(block.id, { ...block });
+    }
+  }
+
+  block(id: string): RtgBlock {
+    const found = this.blocks.get(id);
+    if (!found) {
+      throw new Error(`RTG block ${id} is not on the yard`);
