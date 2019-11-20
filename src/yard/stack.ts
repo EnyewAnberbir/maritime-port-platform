@@ -49,3 +49,23 @@ export class YardMap {
     const found = this.blocks.get(id);
     if (!found) {
       throw new Error(`RTG block ${id} is not on the yard`);
+    }
+    return { ...found };
+  }
+
+  place(box: string, blockId: string, bay: number, row: number, tier: number): YardSlot {
+    const block = this.block(blockId);
+    assertSlotInBlock(block, { bay, row, tier });
+    const existing = this.findBox(box);
+    if (existing) {
+      throw new Error(`box ${box} already stacked at ${slotKey(existing)}`);
+    }
+    const key = slotKey({ block: blockId, bay, row, tier });
+    const occupant = this.slots.get(key);
+    if (occupant?.box) {
+      throw new Error(`slot ${key} occupied by ${occupant.box}`);
+    }
+    const slot: YardSlot = { block: blockId, bay, row, tier, box, abandoned: false };
+    this.slots.set(key, slot);
+    return { ...slot };
+  }
