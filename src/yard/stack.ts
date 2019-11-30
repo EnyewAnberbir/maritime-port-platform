@@ -69,3 +69,23 @@ export class YardMap {
     this.slots.set(key, slot);
     return { ...slot };
   }
+
+  lift(box: string): YardSlot {
+    const slot = this.findBox(box);
+    if (!slot) {
+      throw new Error(`box ${box} is not stacked`);
+    }
+    const key = slotKey(slot);
+    const vacated: YardSlot = { ...slot, box: null, abandoned: true };
+    this.slots.set(key, vacated);
+    return { ...vacated };
+  }
+
+  findBox(box: string): YardSlot | undefined {
+    return this.all().find((slot) => slot.box === box);
+  }
+
+  occupancy(): { used: number; capacity: number } {
+    let capacity = 0;
+    for (const block of this.blocks.values()) {
+      capacity += block.bays * block.rows * block.tiers;
