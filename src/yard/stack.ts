@@ -89,3 +89,23 @@ export class YardMap {
     let capacity = 0;
     for (const block of this.blocks.values()) {
       capacity += block.bays * block.rows * block.tiers;
+    }
+    const used = this.all().filter((slot) => slot.box).length;
+    return { used, capacity };
+  }
+
+  all(): YardSlot[] {
+    return [...this.slots.values()]
+      .map((slot) => ({ ...slot }))
+      .sort((a, b) => slotKey(a).localeCompare(slotKey(b)));
+  }
+
+  occupied(): YardSlot[] {
+    return this.all().filter((slot) => slot.box);
+  }
+
+  /** Drop abandoned empty slots. Occupied slots stay put. */
+  compact(): { kept: YardSlot[]; dropped: number } {
+    const kept: YardSlot[] = [];
+    let dropped = 0;
+    for (const slot of this.all()) {
