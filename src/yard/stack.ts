@@ -109,3 +109,23 @@ export class YardMap {
     const kept: YardSlot[] = [];
     let dropped = 0;
     for (const slot of this.all()) {
+      if (!slot.box && slot.abandoned) {
+        dropped += 1;
+        continue;
+      }
+      kept.push(slot);
+    }
+    this.slots.clear();
+    for (const slot of kept) {
+      this.slots.set(slotKey(slot), { ...slot, abandoned: false });
+    }
+    return { kept: this.all(), dropped };
+  }
+
+  hydrate(slots: YardSlot[], blocks: RtgBlock[] = DEFAULT_BLOCKS): void {
+    this.blocks.clear();
+    for (const block of blocks) {
+      this.blocks.set(block.id, { ...block });
+    }
+    this.slots.clear();
+    for (const slot of slots) {
