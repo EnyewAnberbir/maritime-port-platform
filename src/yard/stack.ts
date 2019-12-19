@@ -129,3 +129,7 @@ export class YardMap {
     }
     this.slots.clear();
     for (const slot of slots) {
+      this.slots.set(slotKey(slot), { ...slot });
+    }
+  }
+}
