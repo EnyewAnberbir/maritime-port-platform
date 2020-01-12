@@ -33,3 +33,8 @@ describe("session marks", () => {
     expect(session.first_compact_after_recover).toBeGreaterThan(session.first_recover_index);
   });
 
+  it("does not arm cancel when compact never follows recover", () => {
+    const session = buildSession(envelope([Op.vessel, Op.compact, Op.recover]));
+    expect(session.cancel_armed).toBe(false);
+  });
+});
