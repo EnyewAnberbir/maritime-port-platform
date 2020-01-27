@@ -31,3 +31,23 @@ export function emptySession(): PortSession {
     recovers: 0,
     compacts: 0,
     extends: 0,
+    extends_after_seal: 0,
+    gens: 0,
+    queries: 0,
+    payload_bytes: 0,
+    first_seal_index: 0,
+    first_recover_index: 0,
+    first_compact_after_recover: 0,
+    saw_seal: false,
+    saw_recover: false,
+    cancel_armed: false,
+  };
+}
+
+/** Port of Zig `lifecycle/session.buildSession`. */
+export function buildSession(envelope: MppkEnvelope): PortSession {
+  const session = emptySession();
+  envelope.records.forEach((record, idx) => {
+    session.payload_bytes += record.payload.length + 16;
+    switch (record.op) {
+      case Op.vessel:
