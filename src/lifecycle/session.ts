@@ -51,3 +51,23 @@ export function buildSession(envelope: MppkEnvelope): PortSession {
     session.payload_bytes += record.payload.length + 16;
     switch (record.op) {
       case Op.vessel:
+        session.vessels += 1;
+        break;
+      case Op.berth:
+        session.berths += 1;
+        break;
+      case Op.cargo:
+        session.cargos += 1;
+        break;
+      case Op.customs:
+        session.customs_cnt += 1;
+        break;
+      case Op.seal:
+        session.seals += 1;
+        session.gens += 1;
+        if (!session.saw_seal) {
+          session.saw_seal = true;
+          session.first_seal_index = idx;
+        }
+        break;
+      case Op.compact:
