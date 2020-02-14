@@ -91,3 +91,17 @@ export function buildSession(envelope: MppkEnvelope): PortSession {
           session.extends_after_seal += 1;
         }
         break;
+      case Op.query:
+        session.queries += 1;
+        break;
+      case Op.export_op:
+        session.gens += 1;
+        break;
+      default:
+        break;
+    }
+  });
+  session.payload_bytes += 10;
+  session.cancel_armed = session.saw_recover && session.first_compact_after_recover > session.first_recover_index;
+  return session;
+}
