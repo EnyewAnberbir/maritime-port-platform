@@ -17,3 +17,23 @@ export const Op = {
   compact: 7,
   extend: 8,
   query: 9,
+  export_op: 10,
+} as const;
+
+export type OpCode = (typeof Op)[keyof typeof Op];
+
+export type MppkRecord = {
+  op: number;
+  key: number;
+  aux: number;
+  payload: Uint8Array;
+};
+
+export type MppkEnvelope = {
+  version: number;
+  flags: number;
+  records: MppkRecord[];
+  checksum: number;
+};
+
+export function encode(envelope: Omit<MppkEnvelope, "checksum"> | MppkEnvelope): Uint8Array {
