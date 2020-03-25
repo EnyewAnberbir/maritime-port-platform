@@ -37,3 +37,23 @@ export type MppkEnvelope = {
 };
 
 export function encode(envelope: Omit<MppkEnvelope, "checksum"> | MppkEnvelope): Uint8Array {
+  if (envelope.records.length > MPPK_MAX_RECORDS) {
+    throw new Error("too many MPPK records");
+  }
+  const bytes: number[] = [MPPK_MAGIC[0]!, MPPK_MAGIC[1]!, MPPK_MAGIC[2]!, MPPK_MAGIC[3]!];
+  writeU16LE(bytes, envelope.version);
+  writeU16LE(bytes, envelope.flags);
+  writeU16LE(bytes, envelope.records.length);
+  for (const record of envelope.records) {
+    bytes.push(record.op & 0xff, 0, 0, 0);
+    writeU32LE(bytes, record.key);
+    writeU32LE(bytes, record.aux);
+    writeU16LE(bytes, record.payload.length);
+    for (let i = 0; i < record.payload.length; i += 1) {
+      bytes.push(record.payload[i]!);
+    }
+  }
+  return new Uint8Array(bytes);
+}
+
+export function decode(data: Uint8Array): MppkEnvelope {
