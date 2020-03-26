@@ -57,3 +57,23 @@ export function encode(envelope: Omit<MppkEnvelope, "checksum"> | MppkEnvelope):
 }
 
 export function decode(data: Uint8Array): MppkEnvelope {
+  if (data.length < MPPK_HEADER_SIZE) {
+    throw new Error("bad header");
+  }
+  if (
+    data[0] !== MPPK_MAGIC[0] ||
+    data[1] !== MPPK_MAGIC[1] ||
+    data[2] !== MPPK_MAGIC[2] ||
+    data[3] !== MPPK_MAGIC[3]
+  ) {
+    throw new Error("bad header");
+  }
+  const version = readU16LE(data, 4);
+  const flags = readU16LE(data, 6);
+  const count = readU16LE(data, 8);
+  if (count > MPPK_MAX_RECORDS) {
+    throw new Error("record count exceeds MPPK limit");
+  }
+  const records: MppkRecord[] = [];
+  let offset = MPPK_HEADER_SIZE;
+  for (let i = 0; i < count; i += 1) {
