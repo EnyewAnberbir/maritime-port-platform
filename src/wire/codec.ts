@@ -77,3 +77,23 @@ export function decode(data: Uint8Array): MppkEnvelope {
   const records: MppkRecord[] = [];
   let offset = MPPK_HEADER_SIZE;
   for (let i = 0; i < count; i += 1) {
+    if (offset + MPPK_RECORD_HEADER_SIZE > data.length) {
+      break;
+    }
+    const op = data[offset]!;
+    const key = readU32LE(data, offset + 4);
+    const aux = readU32LE(data, offset + 8);
+    const payloadLen = readU16LE(data, offset + 12);
+    offset += MPPK_RECORD_HEADER_SIZE;
+    if (offset + payloadLen > data.length) {
+      break;
+    }
+    records.push({
+      op,
+      key,
+      aux,
+      payload: data.slice(offset, offset + payloadLen),
+    });
+    offset += payloadLen;
+  }
+  return {
