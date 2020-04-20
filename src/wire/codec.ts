@@ -97,3 +97,23 @@ export function decode(data: Uint8Array): MppkEnvelope {
     offset += payloadLen;
   }
   return {
+    version,
+    flags,
+    records,
+    checksum: envelopeChecksum(records),
+  };
+}
+
+/** Port of Zig `format/container.validateEnvelope` FNV mix. */
+export function envelopeChecksum(records: MppkRecord[]): number {
+  let hash = 0xcbf29ce484222325n;
+  for (const record of records) {
+    hash = fnv1a64Mix(hash, record.op);
+    hash = fnv1a64Mix(hash, record.key);
+    hash = fnv1a64Mix(hash, record.payload.length);
+    for (let i = 0; i < record.payload.length; i += 1) {
+      hash = fnv1a64Mix(hash, record.payload[i]!);
+    }
+  }
+  return checksumToNumber(hash);
+}
