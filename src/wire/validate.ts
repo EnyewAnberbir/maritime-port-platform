@@ -24,3 +24,23 @@ export function validateMagic(data: Uint8Array): boolean {
 }
 
 export function validateEnvelope(data: Uint8Array): WireIssue[] {
+  const issues: WireIssue[] = [];
+  if (data.length < MPPK_HEADER_SIZE) {
+    issues.push({ code: "truncated", message: "header shorter than 10 bytes" });
+    return issues;
+  }
+  if (!validateMagic(data)) {
+    issues.push({ code: "magic", message: "expected MPPK magic" });
+    return issues;
+  }
+  const count = readU16LE(data, 8);
+  if (count > MPPK_MAX_RECORDS) {
+    issues.push({ code: "count", message: `record count ${count} exceeds ${MPPK_MAX_RECORDS}` });
+  }
+  const spans: Array<{ start: number; end: number }> = [];
+  let offset = MPPK_HEADER_SIZE;
+  let parsed = 0;
+  for (let i = 0; i < count; i += 1) {
+    if (offset + MPPK_RECORD_HEADER_SIZE > data.length) {
+      issues.push({ code: "truncated", message: `record ${i} header truncated` });
+      break;
