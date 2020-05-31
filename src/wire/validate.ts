@@ -64,3 +64,13 @@ export function validateEnvelope(data: Uint8Array): WireIssue[] {
   if (parsed === 0 && count > 0) {
     issues.push({ code: "empty", message: "no records materialized" });
   }
+  return issues;
+}
+
+export function assertValid(data: Uint8Array): MppkEnvelope {
+  const issues = validateEnvelope(data);
+  if (issues.length > 0) {
+    throw new Error(issues.map((issue) => issue.message).join("; "));
+  }
+  return decode(data);
+}
