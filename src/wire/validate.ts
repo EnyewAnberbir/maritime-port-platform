@@ -44,3 +44,23 @@ export function validateEnvelope(data: Uint8Array): WireIssue[] {
     if (offset + MPPK_RECORD_HEADER_SIZE > data.length) {
       issues.push({ code: "truncated", message: `record ${i} header truncated` });
       break;
+    }
+    const payloadLen = readU16LE(data, offset + 12);
+    const start = offset;
+    const end = offset + MPPK_RECORD_HEADER_SIZE + payloadLen;
+    if (end > data.length) {
+      issues.push({ code: "truncated", message: `record ${i} payload truncated` });
+      break;
+    }
+    for (const span of spans) {
+      if (start < span.end && end > span.start) {
+        issues.push({ code: "overlap", message: `record ${i} overlaps prior payload` });
+      }
+    }
+    spans.push({ start, end });
+    offset = end;
+    parsed += 1;
+  }
+  if (parsed === 0 && count > 0) {
+    issues.push({ code: "empty", message: "no records materialized" });
+  }
