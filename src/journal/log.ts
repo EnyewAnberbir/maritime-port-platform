@@ -38,3 +38,23 @@ export type JournalEvent =
       callId: number;
       box: string;
       isoSize: IsoSize;
+      vgmKg: number;
+      tareKg: number;
+      laden: boolean;
+      hazmatClass: string;
+    }
+  | {
+      seq: number;
+      kind: "declare-vgm";
+      box: string;
+      vgmKg: number;
+    }
+  | {
+      seq: number;
+      kind: "gate-in";
+      moveId: number;
+      callId: number;
+      box: string;
+      chassis: string;
+      movedOn: string;
+    }
