@@ -58,3 +58,23 @@ export type JournalEvent =
       chassis: string;
       movedOn: string;
     }
+  | {
+      seq: number;
+      kind: "gate-out";
+      moveId: number;
+      callId: number;
+      box: string;
+      chassis: string;
+      movedOn: string;
+    }
+  | {
+      seq: number;
+      kind: "stack-box";
+      box: string;
+      block: string;
+      bay: number;
+      row: number;
+      tier: number;
+    }
+  | {
+      seq: number;
