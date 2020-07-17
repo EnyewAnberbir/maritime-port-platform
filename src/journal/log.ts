@@ -78,3 +78,23 @@ export type JournalEvent =
     }
   | {
       seq: number;
+      kind: "load-box";
+      box: string;
+    }
+  | {
+      seq: number;
+      kind: "hold-customs";
+      holdId: number;
+      callId: number;
+      box: string;
+      reason: string;
+      openedOn: string;
+    }
+  | {
+      seq: number;
+      kind: "release-customs";
+      holdId: number;
+      releasedOn: string;
+    }
+  | {
+      seq: number;
