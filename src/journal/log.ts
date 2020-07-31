@@ -98,3 +98,23 @@ export type JournalEvent =
     }
   | {
       seq: number;
+      kind: "flag";
+      callId: number;
+      flagged: boolean;
+    }
+  | {
+      seq: number;
+      kind: "seal";
+      callId: number;
+    }
+  | {
+      seq: number;
+      kind: "recover";
+      callId: number;
+    }
+  | {
+      seq: number;
+      kind: "compact";
+      keptSlots: number;
+      droppedSlots: number;
+    }
