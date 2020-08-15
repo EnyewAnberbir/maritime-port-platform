@@ -118,3 +118,23 @@ export type JournalEvent =
       keptSlots: number;
       droppedSlots: number;
     }
+  | {
+      seq: number;
+      kind: "extend-window";
+      windowId: number;
+      endMin: number;
+      flags: number;
+    }
+  | {
+      seq: number;
+      kind: "cargo-state";
+      box: string;
+      from: DocketState;
+      to: DocketState;
+    };
+
+type DistributiveOmit<T, K extends keyof T> = T extends unknown ? Omit<T, K> : never;
+
+export type JournalDraft = DistributiveOmit<JournalEvent, "seq"> & { seq?: number };
+
+export class Journal {
