@@ -138,3 +138,23 @@ type DistributiveOmit<T, K extends keyof T> = T extends unknown ? Omit<T, K> : n
 export type JournalDraft = DistributiveOmit<JournalEvent, "seq"> & { seq?: number };
 
 export class Journal {
+  private events: JournalEvent[] = [];
+  private nextSeq = 1;
+
+  append(event: JournalDraft): JournalEvent {
+    const seq = event.seq ?? this.nextSeq;
+    const recorded = { ...event, seq } as JournalEvent;
+    this.events.push(recorded);
+    this.nextSeq = Math.max(this.nextSeq, seq + 1);
+    return recorded;
+  }
+
+  all(): JournalEvent[] {
+    return this.events.map(cloneEvent);
+  }
+
+  since(seq: number): JournalEvent[] {
+    return this.events.filter((event) => event.seq > seq).map(cloneEvent);
+  }
+
+  lastSeq(): number {
