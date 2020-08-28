@@ -158,3 +158,19 @@ export class Journal {
   }
 
   lastSeq(): number {
+    return this.nextSeq - 1;
+  }
+
+  length(): number {
+    return this.events.length;
+  }
+
+  replace(events: JournalEvent[]): void {
+    this.events = events.map(cloneEvent);
+    this.nextSeq = this.events.reduce((max, event) => Math.max(max, event.seq), 0) + 1;
+  }
+}
+
+function cloneEvent(event: JournalEvent): JournalEvent {
+  return { ...event };
+}
