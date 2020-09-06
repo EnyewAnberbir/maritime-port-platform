@@ -21,3 +21,12 @@ describe("journal replay determinism", () => {
       vgmKg: 18200,
       tareKg: 3780,
       laden: true,
+    });
+    const events = desk.journal.all();
+    const first = replay(events);
+    const second = replay(events);
+    expect(first.snapshot()).toEqual(second.snapshot());
+    expect(first.generation).toBe(desk.store.generation);
+    expect(first.require(1).name).toBe("Harbor Star");
+  });
+});
