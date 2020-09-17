@@ -8,3 +8,22 @@ export function replay(events: JournalEvent[], store = new CanonicalStore()): Ca
   for (const event of ordered) {
     applyEvent(store, event);
   }
+  return store;
+}
+
+export function applyEvent(store: CanonicalStore, event: JournalEvent): void {
+  switch (event.kind) {
+    case "announce": {
+      const created = store.applyAnnounce({
+        id: event.callId,
+        reference: event.reference,
+        imo: event.imo,
+        name: event.name,
+        eta: event.eta,
+        draftDm: event.draftDm,
+        risk: event.risk,
+        flagged: event.flagged,
+      });
+      if (created.id !== event.callId) {
+        throw new Error(`replay announce id drift expected ${event.callId} got ${created.id}`);
+      }
