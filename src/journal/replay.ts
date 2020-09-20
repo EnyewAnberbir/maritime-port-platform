@@ -27,3 +27,23 @@ export function applyEvent(store: CanonicalStore, event: JournalEvent): void {
       if (created.id !== event.callId) {
         throw new Error(`replay announce id drift expected ${event.callId} got ${created.id}`);
       }
+      store.bump();
+      return;
+    }
+    case "assign-berth":
+      store.applyAssignBerth({
+        callId: event.callId,
+        windowId: event.windowId,
+        berthId: event.berthId,
+        startMin: event.startMin,
+        endMin: event.endMin,
+        flags: event.flags,
+      });
+      store.bump();
+      return;
+    case "advance-call":
+      store.applyAdvance(event.callId, event.to);
+      store.bump();
+      return;
+    case "file-docket":
+      store.applyDocket({
