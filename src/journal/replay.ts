@@ -47,3 +47,23 @@ export function applyEvent(store: CanonicalStore, event: JournalEvent): void {
       return;
     case "file-docket":
       store.applyDocket({
+        id: event.docketId,
+        callId: event.callId,
+        box: event.box,
+        isoSize: event.isoSize,
+        vgmKg: event.vgmKg,
+        tareKg: event.tareKg,
+        laden: event.laden,
+        hazmatClass: event.hazmatClass,
+      });
+      store.bump();
+      return;
+    case "declare-vgm": {
+      const current = store.dockets.require(event.box);
+      store.dockets.put(declareVgm(current, event.vgmKg));
+      store.bump();
+      return;
+    }
+    case "gate-in":
+      store.applyGateIn({
+        moveId: event.moveId,
