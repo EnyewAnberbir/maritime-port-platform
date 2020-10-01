@@ -67,3 +67,23 @@ export function applyEvent(store: CanonicalStore, event: JournalEvent): void {
     case "gate-in":
       store.applyGateIn({
         moveId: event.moveId,
+        callId: event.callId,
+        box: event.box,
+        chassis: event.chassis,
+        movedOn: event.movedOn,
+      });
+      store.bump();
+      return;
+    case "gate-out":
+      store.applyGateOut({
+        moveId: event.moveId,
+        callId: event.callId,
+        box: event.box,
+        chassis: event.chassis,
+        movedOn: event.movedOn,
+      });
+      store.bump();
+      return;
+    case "stack-box":
+      store.applyStack(event.box, event.block, event.bay, event.row, event.tier);
+      store.bump();
