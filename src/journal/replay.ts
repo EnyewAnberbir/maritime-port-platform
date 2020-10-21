@@ -87,3 +87,23 @@ export function applyEvent(store: CanonicalStore, event: JournalEvent): void {
     case "stack-box":
       store.applyStack(event.box, event.block, event.bay, event.row, event.tier);
       store.bump();
+      return;
+    case "load-box":
+      store.applyLoad(event.box);
+      store.bump();
+      return;
+    case "hold-customs":
+      store.applyHold({
+        holdId: event.holdId,
+        callId: event.callId,
+        box: event.box,
+        reason: event.reason,
+        openedOn: event.openedOn,
+      });
+      store.bump();
+      return;
+    case "release-customs":
+      store.applyRelease(event.holdId, event.releasedOn);
+      store.bump();
+      return;
+    case "flag":
