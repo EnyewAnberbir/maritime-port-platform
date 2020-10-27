@@ -107,3 +107,23 @@ export function applyEvent(store: CanonicalStore, event: JournalEvent): void {
       store.bump();
       return;
     case "flag":
+      store.calls.patch(event.callId, { flagged: event.flagged });
+      store.bump();
+      return;
+    case "seal":
+      store.calls.patch(event.callId, { sealed: true });
+      store.bump();
+      return;
+    case "recover": {
+      const call = store.require(event.callId);
+      store.calls.patch(event.callId, {
+        sealed: false,
+        flagged: false,
+        risk: call.risk === "high" ? "medium" : call.risk,
+      });
+      store.bump();
+      return;
+    }
+    case "compact": {
+      store.yard.compact();
+      store.bump();
