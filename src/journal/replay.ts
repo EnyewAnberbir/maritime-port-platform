@@ -127,3 +127,16 @@ export function applyEvent(store: CanonicalStore, event: JournalEvent): void {
     case "compact": {
       store.yard.compact();
       store.bump();
+      return;
+    }
+    case "extend-window": {
+      const window = store.windows.require(event.windowId);
+      store.windows.put(extendWindow(window, event.endMin, event.flags));
+      store.bump();
+      return;
+    }
+    case "cargo-state":
+      store.dockets.patch(event.box, { state: event.to });
+      store.bump();
+  }
+}
