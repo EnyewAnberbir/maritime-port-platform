@@ -24,3 +24,16 @@ describe("canonical store", () => {
     store.bump();
     store.applyDocket({
       id: 1,
+      callId: 1,
+      box: "MSCU1000007",
+      isoSize: "40",
+      vgmKg: 18200,
+      tareKg: 3780,
+      laden: true,
+    });
+    store.bump();
+    expect(store.generation).toBe(3);
+    expect(store.rows()[0]?.berth).toBe("B-12");
+    expect(store.rows()[0]?.boxes).toBe(1);
+  });
+});
