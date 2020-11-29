@@ -24,3 +24,23 @@ export type StoreSnapshot = {
 };
 
 export class CanonicalStore {
+  generation = 0;
+  readonly calls = new CallBook();
+  readonly windows = new WindowBook();
+  readonly dockets = new DocketBook();
+  readonly customs = new CustomsJournal();
+  readonly gate = new GateLog();
+  readonly yard = new YardMap();
+
+  bump(): number {
+    this.generation += 1;
+    return this.generation;
+  }
+
+  get(id: number): VesselCall | undefined {
+    return this.calls.get(id);
+  }
+
+  require(id: number): VesselCall {
+    return this.calls.require(id);
+  }
