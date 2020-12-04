@@ -44,3 +44,23 @@ export class CanonicalStore {
   require(id: number): VesselCall {
     return this.calls.require(id);
   }
+
+  all(): VesselCall[] {
+    return this.calls.all();
+  }
+
+  rows(): CallRow[] {
+    return this.calls.rows(this.dockets.boxCounts());
+  }
+
+  applyAnnounce(input: Parameters<typeof announceCall>[0]): VesselCall {
+    const call = announceCall(input);
+    this.calls.put(call);
+    return this.require(call.id);
+  }
+
+  applyAssignBerth(input: {
+    callId: number;
+    windowId: number;
+    berthId: string;
+    startMin: number;
