@@ -64,3 +64,23 @@ export class CanonicalStore {
     windowId: number;
     berthId: string;
     startMin: number;
+    endMin: number;
+    flags: number;
+  }): BerthWindow {
+    const call = this.require(input.callId);
+    const offered = offerWindow({
+      id: input.windowId,
+      berthId: input.berthId,
+      callId: input.callId,
+      startMin: input.startMin,
+      endMin: input.endMin,
+      flags: input.flags,
+    });
+    const held = holdWindow(offered, input.flags);
+    this.windows.put(held);
+    this.calls.put(assignCallBerth(call, input.berthId, held.id));
+    return this.windows.require(held.id);
+  }
+
+  applyAdvance(callId: number, to: CallState): VesselCall {
+    const call = this.require(callId);
