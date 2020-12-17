@@ -84,3 +84,23 @@ export class CanonicalStore {
 
   applyAdvance(callId: number, to: CallState): VesselCall {
     const call = this.require(callId);
+    if (!canCall(call.state, to)) {
+      throw new Error(`cannot advance ${call.reference} ${call.state} -> ${to}`);
+    }
+    if ((to === "alongside" || to === "working") && !call.berthId) {
+      throw new Error(`cannot ${to} ${call.reference} without a berth`);
+    }
+    if (to === "alongside" && call.windowId) {
+      const window = this.windows.require(call.windowId);
+      this.windows.put(activateWindow(window));
+    }
+    return this.calls.patch(callId, { state: to });
+  }
+
+  applyDocket(input: Parameters<typeof fileDocket>[0]): CargoDocket {
+    this.require(input.callId);
+    const docket = fileDocket(input);
+    return this.dockets.put(docket);
+  }
+
+  applyVgm(box: string, vgmKg: number): CargoDocket {
