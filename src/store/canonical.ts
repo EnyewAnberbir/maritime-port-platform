@@ -104,3 +104,23 @@ export class CanonicalStore {
   }
 
   applyVgm(box: string, vgmKg: number): CargoDocket {
+    const current = this.dockets.require(box);
+    return this.dockets.put(declareVgm(current, vgmKg));
+  }
+
+  applyGateIn(input: { moveId: number; callId: number; box: string; chassis: string; movedOn: string }): void {
+    const docket = this.dockets.require(input.box);
+    if (docket.callId !== input.callId) {
+      throw new Error(`box ${input.box} is not on call ${input.callId}`);
+    }
+    if (docket.state !== "planned" && docket.state !== "held") {
+      throw new Error(`box ${input.box} cannot gate in from ${docket.state}`);
+    }
+    this.gate.append(
+      recordMove({
+        id: input.moveId,
+        direction: "in",
+        box: input.box,
+        chassis: input.chassis,
+        callId: input.callId,
+        movedOn: input.movedOn,
