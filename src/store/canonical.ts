@@ -124,3 +124,23 @@ export class CanonicalStore {
         chassis: input.chassis,
         callId: input.callId,
         movedOn: input.movedOn,
+      }),
+    );
+    this.dockets.patch(input.box, { state: "gated_in" });
+  }
+
+  applyGateOut(input: { moveId: number; callId: number; box: string; chassis: string; movedOn: string }): void {
+    if (this.customs.isHeld(input.box)) {
+      throw new Error(`box ${input.box} is under customs hold`);
+    }
+    this.gate.append(
+      recordMove({
+        id: input.moveId,
+        direction: "out",
+        box: input.box,
+        chassis: input.chassis,
+        callId: input.callId,
+        movedOn: input.movedOn,
+      }),
+    );
+    const stacked = this.yard.findBox(input.box);
