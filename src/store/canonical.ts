@@ -144,3 +144,22 @@ export class CanonicalStore {
       }),
     );
     const stacked = this.yard.findBox(input.box);
+    if (stacked) {
+      this.yard.lift(input.box);
+    }
+    this.dockets.patch(input.box, { state: "departed" });
+  }
+
+  applyStack(box: string, block: string, bay: number, row: number, tier: number): void {
+    const docket = this.dockets.require(box);
+    if (docket.state !== "gated_in" && docket.state !== "held") {
+      throw new Error(`box ${box} cannot stack from ${docket.state}`);
+    }
+    this.yard.place(box, block, bay, row, tier);
+    this.dockets.patch(box, { state: this.customs.isHeld(box) ? "held" : "stacked" });
+  }
+
+  applyLoad(box: string): void {
+    if (this.customs.isHeld(box)) {
+      throw new Error(`box ${box} is under customs hold`);
+    }
