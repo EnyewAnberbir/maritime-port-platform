@@ -163,3 +163,23 @@ export class CanonicalStore {
     if (this.customs.isHeld(box)) {
       throw new Error(`box ${box} is under customs hold`);
     }
+    const docket = this.dockets.require(box);
+    if (docket.state !== "stacked" && docket.state !== "gated_in") {
+      throw new Error(`box ${box} cannot load from ${docket.state}`);
+    }
+    if (this.yard.findBox(box)) {
+      this.yard.lift(box);
+    }
+    this.dockets.patch(box, { state: "loaded" });
+  }
+
+  applyHold(input: { holdId: number; callId: number; box: string; reason: string; openedOn: string }): CustomsHold {
+    this.dockets.require(input.box);
+    const hold = openHold({
+      id: input.holdId,
+      callId: input.callId,
+      box: input.box,
+      reason: input.reason,
+      openedOn: input.openedOn,
+    });
+    this.customs.put(hold);
