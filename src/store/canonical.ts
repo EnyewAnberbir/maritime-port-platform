@@ -183,3 +183,23 @@ export class CanonicalStore {
       openedOn: input.openedOn,
     });
     this.customs.put(hold);
+    this.dockets.patch(input.box, { state: "held" });
+    return this.customs.require(hold.id);
+  }
+
+  applyRelease(holdId: number, releasedOn: string): CustomsHold {
+    const hold = releaseHold(this.customs.require(holdId), releasedOn);
+    this.customs.put(hold);
+    const docket = this.dockets.get(hold.box);
+    if (docket && docket.state === "held") {
+      const next = this.yard.findBox(hold.box) ? "stacked" : this.gate.isInside(hold.box) ? "gated_in" : "planned";
+      this.dockets.patch(hold.box, { state: next });
+    }
+    return hold;
+  }
+
+  snapshot(): StoreSnapshot {
+    return {
+      generation: this.generation,
+      nextCallId: this.calls.peekNextId(),
+      nextWindowId: this.windows.peekNextId(),
