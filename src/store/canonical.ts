@@ -203,3 +203,23 @@ export class CanonicalStore {
       generation: this.generation,
       nextCallId: this.calls.peekNextId(),
       nextWindowId: this.windows.peekNextId(),
+      nextDocketId: this.dockets.peekNextId(),
+      nextHoldId: this.customs.peekNextId(),
+      nextMoveId: this.gate.peekNextId(),
+      calls: this.calls.all(),
+      windows: this.windows.all(),
+      dockets: this.dockets.all(),
+      holds: this.customs.all(),
+      moves: this.gate.all(),
+      slots: this.yard.all(),
+      blocks: DEFAULT_BLOCKS.map((block) => ({ ...block })),
+    };
+  }
+
+  hydrate(snapshot: StoreSnapshot): void {
+    this.generation = snapshot.generation;
+    this.calls.hydrate(snapshot.calls, snapshot.nextCallId);
+    this.windows.hydrate(snapshot.windows, snapshot.nextWindowId);
+    this.dockets.hydrate(snapshot.dockets, snapshot.nextDocketId);
+    this.customs.hydrate(snapshot.holds, snapshot.nextHoldId);
+    this.gate.hydrate(snapshot.moves, snapshot.nextMoveId);
