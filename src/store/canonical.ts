@@ -223,3 +223,6 @@ export class CanonicalStore {
     this.dockets.hydrate(snapshot.dockets, snapshot.nextDocketId);
     this.customs.hydrate(snapshot.holds, snapshot.nextHoldId);
     this.gate.hydrate(snapshot.moves, snapshot.nextMoveId);
+    this.yard.hydrate(snapshot.slots, snapshot.blocks);
+  }
+}
