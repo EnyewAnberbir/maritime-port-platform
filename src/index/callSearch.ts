@@ -25,3 +25,23 @@ export class CallSearchIndex {
       const fields: Array<Exclude<SearchHit["field"], "box">> = ["reference", "vessel", "berth"];
       let matched: SearchHit | null = null;
       for (const field of fields) {
+        const value = row[field].toLowerCase();
+        if (value.includes(needle)) {
+          const score = value === needle ? 4 : value.startsWith(needle) ? 3 : 1;
+          matched = { id: row.id, score, field };
+          break;
+        }
+      }
+      if (!matched) {
+        const boxes = this.boxes.get(row.id) ?? [];
+        if (boxes.some((box) => box.toLowerCase().includes(needle))) {
+          matched = { id: row.id, score: 2, field: "box" };
+        }
+      }
+      if (matched) {
+        hits.push(matched);
+      }
+    }
+    return hits.sort((a, b) => b.score - a.score || a.id - b.id);
+  }
+
