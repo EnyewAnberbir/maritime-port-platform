@@ -45,3 +45,8 @@ export class CallSearchIndex {
     return hits.sort((a, b) => b.score - a.score || a.id - b.id);
   }
 
+  lookup(query: string): CallRow[] {
+    const ids = new Set(this.search(query).map((hit) => hit.id));
+    return this.rows.filter((row) => ids.has(row.id));
+  }
+}
