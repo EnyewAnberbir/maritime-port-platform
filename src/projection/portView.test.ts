@@ -32,3 +32,6 @@ describe("port view", () => {
     expect(view.alongsideCount).toBe(1);
     expect(view.openHoldCount).toBe(1);
     expect(view.yardUsed).toBe(1);
+    expect(view.docketCount).toBe(1);
+  });
+});
