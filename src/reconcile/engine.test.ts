@@ -20,3 +20,5 @@ describe("reconcile converge", () => {
     expect(rebuilt.report.matched).toBe(false);
     expect(rebuilt.report.rebuilt).toBe(true);
     expect(rebuilt.view.callCount).toBe(1);
+  });
+});
