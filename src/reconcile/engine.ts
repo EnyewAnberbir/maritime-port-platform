@@ -15,3 +15,23 @@ export function compareView(store: CanonicalStore, view: PortView): string[] {
     "alongsideCount",
     "workingCount",
     "openHoldCount",
+    "yardUsed",
+    "yardCapacity",
+    "docketCount",
+    "flaggedCount",
+    "sealedCount",
+    "liveWindowCount",
+    "storeGeneration",
+  ];
+  for (const key of keys) {
+    if (fresh[key] !== view[key]) {
+      drift.push(`${key}:${view[key]}->${fresh[key]}`);
+    }
+  }
+  return drift;
+}
+
+export function reconcile(store: CanonicalStore, view: PortView): { view: PortView; report: ReconcileReport } {
+  const drift = compareView(store, view);
+  if (drift.length === 0) {
+    return { view, report: { matched: true, rebuilt: false, drift } };
