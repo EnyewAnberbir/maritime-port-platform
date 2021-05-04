@@ -35,3 +35,9 @@ export function reconcile(store: CanonicalStore, view: PortView): { view: PortVi
   const drift = compareView(store, view);
   if (drift.length === 0) {
     return { view, report: { matched: true, rebuilt: false, drift } };
+  }
+  return {
+    view: projectPort(store),
+    report: { matched: false, rebuilt: true, drift },
+  };
+}
