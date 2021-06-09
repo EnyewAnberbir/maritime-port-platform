@@ -17,3 +17,23 @@ describe("checkpoint resilience", () => {
       {
         seq: desk.journal.lastSeq() + 1,
         kind: "file-docket" as const,
+        docketId: 1,
+        callId: 1,
+        box: "MSCU3000004",
+        isoSize: "20" as const,
+        vgmKg: 9800,
+        tareKg: 2180,
+        laden: true,
+        hazmatClass: "",
+      },
+      {
+        seq: desk.journal.lastSeq() + 2,
+        kind: "flag" as const,
+        callId: 1,
+        flagged: true,
+      },
+    ];
+    desk.restore(checkpoint, extra);
+    expect(desk.store.dockets.require("MSCU3000004").callId).toBe(1);
+    expect(desk.store.require(1).flagged).toBe(true);
+    expect(desk.store.require(1).berthId).toBe("Q-3");
