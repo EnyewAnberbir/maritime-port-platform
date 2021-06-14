@@ -37,3 +37,5 @@ describe("checkpoint resilience", () => {
     expect(desk.store.dockets.require("MSCU3000004").callId).toBe(1);
     expect(desk.store.require(1).flagged).toBe(true);
     expect(desk.store.require(1).berthId).toBe("Q-3");
+  });
+});
