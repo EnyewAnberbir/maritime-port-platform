@@ -18,3 +18,20 @@ export class AuditTrail {
       summary,
       generation,
     };
+    this.nextSeq += 1;
+    this.events.push(event);
+    return event;
+  }
+
+  all(): AuditEvent[] {
+    return this.events.map((event) => ({ ...event }));
+  }
+
+  ofKind(kind: AuditKind): AuditEvent[] {
+    return this.events.filter((event) => event.kind === kind).map((event) => ({ ...event }));
+  }
+
+  length(): number {
+    return this.events.length;
+  }
+}
