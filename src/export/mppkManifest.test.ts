@@ -20,3 +20,4 @@ describe("export does not mutate", () => {
     expect(Array.from(manifest.bytes.slice(0, 4))).toEqual(Array.from(MPPK_MAGIC));
     expect(manifest.callCount).toBe(1);
   });
+});
