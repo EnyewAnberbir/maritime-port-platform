@@ -36,3 +36,23 @@ export function exportMppk(store: CanonicalStore): MppkManifest {
   }
   for (const docket of dockets) {
     records.push({
+      op: Op.cargo,
+      key: docket.id,
+      aux: docket.callId,
+      payload: encodeUtf8(`${docket.box}|${docket.isoSize}|${docket.vgmKg}|${docket.state}`),
+    });
+  }
+  for (const hold of holds) {
+    records.push({
+      op: Op.customs,
+      key: hold.id,
+      aux: hold.callId,
+      payload: encodeUtf8(`${hold.box}|${hold.reason}`),
+    });
+  }
+  records.push({
+    op: Op.export_op,
+    key: generationBefore,
+    aux: calls.length,
+    payload: encodeUtf8("maritime-port-platform"),
+  });
