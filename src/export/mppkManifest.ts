@@ -56,3 +56,17 @@ export function exportMppk(store: CanonicalStore): MppkManifest {
     aux: calls.length,
     payload: encodeUtf8("maritime-port-platform"),
   });
+
+  const draft = { version: 1, flags: 0, records };
+  const bytes = encode(draft);
+  if (store.generation !== generationBefore) {
+    throw new Error("export mutated the canonical store");
+  }
+  return {
+    bytes,
+    envelope: { ...draft, checksum: envelopeChecksum(records) },
+    storeGeneration: generationBefore,
+    callCount: calls.length,
+    recordCount: records.length,
+  };
+}
