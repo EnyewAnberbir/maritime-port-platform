@@ -23,3 +23,19 @@ describe("announce -> berth -> cargo -> journal -> projection -> export", () => 
       tareKg: 3780,
       laden: true,
     });
+    expect(desk.journal.all().map((event) => event.kind)).toEqual([
+      "announce",
+      "assign-berth",
+      "file-docket",
+    ]);
+    const view = projectPort(desk.store);
+    expect(view.callCount).toBe(1);
+    expect(view.liveWindowCount).toBe(1);
+    expect(view.docketCount).toBe(1);
+    const generation = desk.store.generation;
+    const manifest = desk.exportManifest();
+    expect(desk.store.generation).toBe(generation);
+    expect(manifest.callCount).toBe(1);
+    expect(exportMppk(desk.store).bytes.length).toBe(manifest.bytes.length);
+  });
+});
