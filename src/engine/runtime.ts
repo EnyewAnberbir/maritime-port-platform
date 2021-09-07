@@ -21,3 +21,23 @@ export type Command =
       name: string;
       imo: string;
       eta: string;
+      draftDm: number;
+      reference?: string;
+      risk?: Risk;
+      flagged?: boolean;
+    }
+  | { type: "assignBerth"; callId: number; berthId: string; startMin: number; endMin: number; flags?: number }
+  | { type: "advanceCall"; callId: number; next: CallState }
+  | {
+      type: "fileDocket";
+      callId: number;
+      box: string;
+      isoSize: IsoSize;
+      vgmKg: number;
+      tareKg: number;
+      laden: boolean;
+      hazmatClass?: string;
+    }
+  | { type: "declareVgm"; box: string; vgmKg: number }
+  | { type: "gateIn"; callId: number; box: string; chassis: string; movedOn?: string }
+  | { type: "gateOut"; callId: number; box: string; chassis: string; movedOn?: string }
