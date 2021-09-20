@@ -41,3 +41,22 @@ export type Command =
   | { type: "declareVgm"; box: string; vgmKg: number }
   | { type: "gateIn"; callId: number; box: string; chassis: string; movedOn?: string }
   | { type: "gateOut"; callId: number; box: string; chassis: string; movedOn?: string }
+  | { type: "stackBox"; box: string; block: string; bay: number; row: number; tier: number }
+  | { type: "loadBox"; box: string }
+  | { type: "holdCustoms"; callId: number; box: string; reason: string; openedOn?: string }
+  | { type: "releaseCustoms"; holdId: number; releasedOn?: string }
+  | { type: "flag"; callId: number; flagged: boolean }
+  | { type: "seal"; callId: number }
+  | { type: "recover"; callId: number }
+  | { type: "compact" }
+  | { type: "extendWindow"; windowId: number; endMin: number; flags?: number };
+
+export class PortDesk {
+  readonly store = new CanonicalStore();
+  readonly journal = new Journal();
+  readonly index = new CallSearchIndex();
+  readonly audit = new AuditTrail();
+  readonly metrics = new Metrics();
+  private readonly policy = new TransitionPolicy();
+  view: PortView;
+
