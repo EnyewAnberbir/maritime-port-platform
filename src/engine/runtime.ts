@@ -60,3 +60,23 @@ export class PortDesk {
   private readonly policy = new TransitionPolicy();
   view: PortView;
 
+  constructor() {
+    this.view = projectPort(this.store);
+  }
+
+  rows(): CallRow[] {
+    return this.store.rows();
+  }
+
+  dispatch(command: Command): JournalEvent[] {
+    const planned = this.plan(command);
+    const recorded: JournalEvent[] = [];
+    for (const draft of planned) {
+      const event = this.journal.append(draft);
+      applyEvent(this.store, event);
+      recorded.push(event);
+    }
+    this.refresh(command, recorded);
+    return recorded;
+  }
+
