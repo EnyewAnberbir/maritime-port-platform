@@ -80,3 +80,23 @@ export class PortDesk {
     return recorded;
   }
 
+  exportManifest(): MppkManifest {
+    const before = this.store.generation;
+    const manifest = exportMppk(this.store);
+    if (this.store.generation !== before) {
+      throw new Error("export mutated the canonical store");
+    }
+    this.audit.record("export", `mppk calls=${manifest.callCount}`, before);
+    this.metrics.record({ exportBytes: manifest.bytes.length });
+    return manifest;
+  }
+
+  checkpoint(): Checkpoint {
+    const checkpoint = takeCheckpoint(this.store, this.journal.lastSeq());
+    this.audit.record("recovery", `checkpoint seq=${checkpoint.journalSeq}`, this.store.generation);
+    return checkpoint;
+  }
+
+  restore(checkpoint: Checkpoint, tail: JournalEvent[] = []): void {
+    const recovered = recover(checkpoint, tail);
+    this.store.hydrate(recovered.snapshot());
