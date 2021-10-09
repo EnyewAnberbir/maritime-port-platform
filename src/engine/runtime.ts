@@ -100,3 +100,23 @@ export class PortDesk {
   restore(checkpoint: Checkpoint, tail: JournalEvent[] = []): void {
     const recovered = recover(checkpoint, tail);
     this.store.hydrate(recovered.snapshot());
+    const events = [
+      ...this.journal.all().filter((event) => event.seq <= checkpoint.journalSeq),
+      ...tail.filter((event) => event.seq > checkpoint.journalSeq),
+    ].sort((a, b) => a.seq - b.seq);
+    this.journal.replace(events);
+    this.view = projectPort(this.store);
+    this.rebuildIndex();
+    this.audit.record("recovery", `restore seq=${checkpoint.journalSeq} tail=${tail.length}`, this.store.generation);
+    this.syncMetrics();
+  }
+
+  converge(): ReconcileReport {
+    const { view, report } = reconcile(this.store, this.view);
+    this.view = view;
+    this.audit.record("reconcile", report.matched ? "matched" : "rebuilt", this.store.generation);
+    this.metrics.setLag(this.store.generation, this.view.storeGeneration);
+    return report;
+  }
+
+  compactJob(id: string): CompactJob {
