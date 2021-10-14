@@ -120,3 +120,23 @@ export class PortDesk {
   }
 
   compactJob(id: string): CompactJob {
+    const job = runCompactJob(
+      { id, stage: "pending", inputHash: "", kept: 0, dropped: 0, slots: [] },
+      this.store.yard.all(),
+    );
+    if (job.dropped > 0) {
+      this.store.yard.hydrate(job.slots);
+      this.store.bump();
+    }
+    this.metrics.bumpCompact();
+    this.audit.record("compact", `job ${id} dropped=${job.dropped}`, this.store.generation);
+    this.view = projectPort(this.store);
+    return job;
+  }
+
+  private plan(command: Command): JournalDraft[] {
+    switch (command.type) {
+      case "announce": {
+        const id = this.store.calls.peekNextId();
+        return [
+          {
