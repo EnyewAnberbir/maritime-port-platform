@@ -140,3 +140,23 @@ export class PortDesk {
         const id = this.store.calls.peekNextId();
         return [
           {
+            kind: "announce",
+            callId: id,
+            reference: command.reference ?? defaultReference(id),
+            imo: command.imo,
+            name: command.name,
+            eta: command.eta,
+            draftDm: command.draftDm,
+            risk: command.risk ?? "low",
+            flagged: command.flagged ?? false,
+          },
+        ];
+      }
+      case "assignBerth": {
+        this.requireCall(command.callId);
+        return [
+          {
+            kind: "assign-berth",
+            callId: command.callId,
+            windowId: this.store.windows.peekNextId(),
+            berthId: command.berthId,
