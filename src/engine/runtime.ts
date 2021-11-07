@@ -160,3 +160,23 @@ export class PortDesk {
             callId: command.callId,
             windowId: this.store.windows.peekNextId(),
             berthId: command.berthId,
+            startMin: command.startMin,
+            endMin: command.endMin,
+            flags: command.flags ?? 0,
+          },
+        ];
+      }
+      case "advanceCall": {
+        const call = this.requireCall(command.callId);
+        this.policy.rejectCall(call.state, command.next, "advance");
+        return [{ kind: "advance-call", callId: command.callId, from: call.state, to: command.next }];
+      }
+      case "fileDocket":
+        this.requireCall(command.callId);
+        return [
+          {
+            kind: "file-docket",
+            docketId: this.store.dockets.peekNextId(),
+            callId: command.callId,
+            box: command.box,
+            isoSize: command.isoSize,
