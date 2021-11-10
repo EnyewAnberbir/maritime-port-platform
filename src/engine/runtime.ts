@@ -180,3 +180,23 @@ export class PortDesk {
             callId: command.callId,
             box: command.box,
             isoSize: command.isoSize,
+            vgmKg: command.vgmKg,
+            tareKg: command.tareKg,
+            laden: command.laden,
+            hazmatClass: command.hazmatClass ?? "",
+          },
+        ];
+      case "declareVgm":
+        this.store.dockets.require(command.box);
+        return [{ kind: "declare-vgm", box: command.box, vgmKg: command.vgmKg }];
+      case "gateIn":
+        this.requireCall(command.callId);
+        return [
+          {
+            kind: "gate-in",
+            moveId: this.store.gate.peekNextId(),
+            callId: command.callId,
+            box: command.box,
+            chassis: command.chassis,
+            movedOn: command.movedOn ?? STAMP,
+          },
