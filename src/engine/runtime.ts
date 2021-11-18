@@ -200,3 +200,23 @@ export class PortDesk {
             chassis: command.chassis,
             movedOn: command.movedOn ?? STAMP,
           },
+        ];
+      case "gateOut":
+        this.requireCall(command.callId);
+        return [
+          {
+            kind: "gate-out",
+            moveId: this.store.gate.peekNextId(),
+            callId: command.callId,
+            box: command.box,
+            chassis: command.chassis,
+            movedOn: command.movedOn ?? STAMP,
+          },
+        ];
+      case "stackBox":
+        this.store.dockets.require(command.box);
+        return [
+          {
+            kind: "stack-box",
+            box: command.box,
+            block: command.block,
