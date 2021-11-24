@@ -220,3 +220,23 @@ export class PortDesk {
             kind: "stack-box",
             box: command.box,
             block: command.block,
+            bay: command.bay,
+            row: command.row,
+            tier: command.tier,
+          },
+        ];
+      case "loadBox":
+        this.store.dockets.require(command.box);
+        return [{ kind: "load-box", box: command.box }];
+      case "holdCustoms":
+        this.requireCall(command.callId);
+        return [
+          {
+            kind: "hold-customs",
+            holdId: this.store.customs.peekNextId(),
+            callId: command.callId,
+            box: command.box,
+            reason: command.reason,
+            openedOn: command.openedOn ?? STAMP,
+          },
+        ];
