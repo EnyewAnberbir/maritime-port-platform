@@ -240,3 +240,23 @@ export class PortDesk {
             openedOn: command.openedOn ?? STAMP,
           },
         ];
+      case "releaseCustoms":
+        this.store.customs.require(command.holdId);
+        return [
+          {
+            kind: "release-customs",
+            holdId: command.holdId,
+            releasedOn: command.releasedOn ?? STAMP,
+          },
+        ];
+      case "flag":
+        this.requireCall(command.callId);
+        return [{ kind: "flag", callId: command.callId, flagged: command.flagged }];
+      case "seal":
+        this.requireCall(command.callId);
+        return [{ kind: "seal", callId: command.callId }];
+      case "recover":
+        this.requireCall(command.callId);
+        return [{ kind: "recover", callId: command.callId }];
+      case "compact": {
+        const slots = this.store.yard.all();
