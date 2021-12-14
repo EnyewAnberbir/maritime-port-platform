@@ -260,3 +260,23 @@ export class PortDesk {
         return [{ kind: "recover", callId: command.callId }];
       case "compact": {
         const slots = this.store.yard.all();
+        const dropped = slots.filter((slot) => !slot.box && slot.abandoned).length;
+        return [{ kind: "compact", keptSlots: slots.length - dropped, droppedSlots: dropped }];
+      }
+      case "extendWindow":
+        this.store.windows.require(command.windowId);
+        return [
+          {
+            kind: "extend-window",
+            windowId: command.windowId,
+            endMin: command.endMin,
+            flags: command.flags ?? 0,
+          },
+        ];
+    }
+  }
+
+  private refresh(command: Command, events: JournalEvent[]): void {
+    this.view = projectPort(this.store);
+    // Berth reassignment, window extend, and flag updates leave the search
+    // projection on the previous generation. Later lookup/export observers
