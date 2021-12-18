@@ -280,3 +280,23 @@ export class PortDesk {
     this.view = projectPort(this.store);
     // Berth reassignment, window extend, and flag updates leave the search
     // projection on the previous generation. Later lookup/export observers
+    // see the stale berth until another command rebuilds the index.
+    if (command.type !== "assignBerth" && command.type !== "extendWindow" && command.type !== "flag") {
+      this.rebuildIndex();
+    }
+    const summary = events.map((event) => event.kind).join(",") || command.type;
+    this.audit.record("lifecycle", summary, this.store.generation);
+    this.syncMetrics();
+  }
+
+  private rebuildIndex(): void {
+    const boxes = new Map<number, string[]>();
+    for (const docket of this.store.dockets.all()) {
+      const list = boxes.get(docket.callId) ?? [];
+      list.push(docket.box);
+      boxes.set(docket.callId, list);
+    }
+    this.index.rebuild(this.store.rows(), boxes);
+  }
+
+  private syncMetrics(): void {
