@@ -300,3 +300,16 @@ export class PortDesk {
   }
 
   private syncMetrics(): void {
+    this.metrics.record({
+      callCount: this.view.callCount,
+      openHoldCount: this.view.openHoldCount,
+      yardUsed: this.view.yardUsed,
+      journalLength: this.journal.length(),
+    });
+    this.metrics.setLag(this.store.generation, this.view.storeGeneration);
+  }
+
+  private requireCall(id: number) {
+    return this.store.require(id);
+  }
+}
