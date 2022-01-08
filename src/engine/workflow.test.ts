@@ -24,3 +24,9 @@ describe("MPPK workflow", () => {
     expect(stats.recovered).toBe(true);
     expect(stats.compacted).toBe(true);
     expect(stats.digest).toBeGreaterThan(0);
+  });
+
+  it("stays quiet on empty input", () => {
+    expect(processMppkBytes(new Uint8Array())).toMatchObject({ sections: 0, vessels: 0 });
+  });
+});
