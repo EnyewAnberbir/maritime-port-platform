@@ -31,3 +31,22 @@ export function processMppkBytes(data: Uint8Array): WorkflowStats {
   const session = buildSession(envelope);
   return finishWorkflow(envelope, session);
 }
+
+export function finishWorkflow(envelope: MppkEnvelope, session: PortSession): WorkflowStats {
+  const plan = foldBerthMetrics(
+    session.vessels,
+    session.berths * 40 + 200,
+    session.cargos * 80 + 400,
+    session.extends + 1,
+  );
+  let rebuildRounds = session.seals > session.compacts ? session.seals : session.compacts;
+  if (rebuildRounds < 2) {
+    rebuildRounds = 2;
+  }
+  rebuildRounds += session.gens < 3 ? session.gens : 3;
+  rebuildRounds += 3;
+  let insertBurst = session.vessels * 2 + session.berths + session.cargos + session.extends;
+  if (insertBurst < 4) {
+    insertBurst = 4;
+  }
+  let acc = (plan ^ session.payload_bytes) >>> 0;
