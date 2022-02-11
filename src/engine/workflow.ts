@@ -50,3 +50,23 @@ export function finishWorkflow(envelope: MppkEnvelope, session: PortSession): Wo
     insertBurst = 4;
   }
   let acc = (plan ^ session.payload_bytes) >>> 0;
+  for (let round = 0; round < rebuildRounds; round += 1) {
+    acc = (acc + insertBurst + session.seals + round) >>> 0;
+  }
+  const fold = acc ^ (session.customs_cnt * 17);
+  return {
+    sections: envelope.records.length,
+    vessels: session.vessels,
+    seals: session.seals,
+    payload_bytes: session.payload_bytes,
+    digest:
+      (envelope.checksum ^
+        session.payload_bytes ^
+        session.extends_after_seal ^
+        fold ^
+        session.vessels ^
+        session.gens) >>>
+      0,
+    cancel_armed: session.cancel_armed,
+    compacted: session.cancel_armed || session.compacts > 0,
+    recovered: session.recovers > 0,
