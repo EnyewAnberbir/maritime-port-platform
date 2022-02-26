@@ -70,3 +70,18 @@ export function finishWorkflow(envelope: MppkEnvelope, session: PortSession): Wo
     cancel_armed: session.cancel_armed,
     compacted: session.cancel_armed || session.compacts > 0,
     recovered: session.recovers > 0,
+  };
+}
+
+function quietStats(): WorkflowStats {
+  return {
+    sections: 0,
+    vessels: 0,
+    seals: 0,
+    payload_bytes: 0,
+    digest: 0,
+    cancel_armed: false,
+    compacted: false,
+    recovered: false,
+  };
+}
