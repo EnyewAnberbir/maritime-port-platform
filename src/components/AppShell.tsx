@@ -22,3 +22,11 @@ export function AppShell({
     <div className="app-shell">
       <header className="app-header">
         <div className="brand">Maritime Port Platform Desk</div>
+        <div className="stamp">
+          harbor gen {generation} · {callCount} calls · offline
+        </div>
+      </header>
+      {children}
+    </div>
+  );
+}
