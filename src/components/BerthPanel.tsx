@@ -9,3 +9,17 @@ export function BerthPanel({ windows }: { windows: BerthWindow[] }) {
       </section>
     );
   }
+  return (
+    <section className="ledger-panel">
+      <h2>Berth windows</h2>
+      <ul>
+        {windows.map((window) => (
+          <li key={window.id}>
+            {window.berthId} · call {window.callId} · {window.startMin}–{window.endMin} · {window.state} ·
+            gen {window.generation}
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
