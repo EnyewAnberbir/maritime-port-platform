@@ -23,3 +23,11 @@ describe("CallTable", () => {
       <CallTable
         rows={[row]}
         selectedIndex={null}
+        onSelectIndex={() => undefined}
+        onInspect={onInspect}
+      />,
+    );
+    await userEvent.click(screen.getByRole("button", { name: "Inspect" }));
+    expect(onInspect).toHaveBeenCalledWith(row);
+  });
+});
