@@ -29,3 +29,23 @@ export function CallTable({
         {rows.map((row, index) => (
           <tr
             key={index}
+            data-selected={selectedIndex === index}
+            onClick={() => onSelectIndex(index)}
+          >
+            <td>{row.reference}</td>
+            <td className={row.flagged ? "flagged" : undefined}>{row.vessel}</td>
+            <td>{row.berth || "—"}</td>
+            <td>{row.eta.slice(0, 16).replace("T", " ")}</td>
+            <td>{row.boxes}</td>
+            <td>{row.state}</td>
+            <td>
+              <span className={`severity-${row.risk}`} />
+            </td>
+            <td>
+              <button type="button" onClick={() => onInspect(row)}>
+                Inspect
+              </button>
+            </td>
+          </tr>
+        ))}
+      </tbody>
