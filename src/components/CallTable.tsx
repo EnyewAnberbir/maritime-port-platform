@@ -49,3 +49,6 @@ export function CallTable({
           </tr>
         ))}
       </tbody>
+    </table>
+  );
+}
