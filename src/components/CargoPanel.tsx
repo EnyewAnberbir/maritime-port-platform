@@ -14,3 +14,12 @@ export function CargoPanel({ dockets }: { dockets: CargoDocket[] }) {
       <h2>Cargo dockets</h2>
       <ul>
         {dockets.map((docket) => (
+          <li key={docket.box}>
+            {docket.box} · {docket.isoSize}' · VGM {docket.vgmKg} kg · {docket.state}
+            {docket.hazmatClass ? ` · IMDG ${docket.hazmatClass}` : ""}
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
