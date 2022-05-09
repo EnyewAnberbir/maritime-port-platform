@@ -8,3 +8,17 @@ export function CustomsPanel({ holds }: { holds: CustomsHold[] }) {
         <p className="stamp">No open or released holds.</p>
       </section>
     );
+  }
+  return (
+    <section className="ledger-panel">
+      <h2>Customs journal</h2>
+      <ul>
+        {holds.map((hold) => (
+          <li key={hold.id}>
+            {hold.box} · {hold.reason} · {hold.releasedOn ? "released" : "held"}
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
