@@ -16,3 +16,23 @@ export function FilterBar({
   onFlaggedOnly: (flaggedOnly: boolean) => void;
 }) {
   return (
+    <div className="filter-bar">
+      <input
+        type="search"
+        placeholder="Search reference, vessel, berth"
+        value={query}
+        onChange={(event) => onQuery(event.target.value)}
+      />
+      <select
+        aria-label="Call state"
+        value={state}
+        onChange={(event) => onState(event.target.value as CallState | "all")}
+      >
+        <option value="all">all states</option>
+        {CALL_STATES.map((item) => (
+          <option key={item} value={item}>
+            {item}
+          </option>
+        ))}
+      </select>
+      <label>
