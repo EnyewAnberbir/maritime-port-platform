@@ -36,3 +36,13 @@ export function FilterBar({
         ))}
       </select>
       <label>
+        <input
+          type="checkbox"
+          checked={flaggedOnly}
+          onChange={(event) => onFlaggedOnly(event.target.checked)}
+        />{" "}
+        flagged only
+      </label>
+    </div>
+  );
+}
