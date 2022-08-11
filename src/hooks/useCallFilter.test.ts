@@ -29,3 +29,9 @@ const rows: CallRow[] = [
 
 describe("call filter", () => {
   it("filters by query, state, and flaggedOnly", () => {
+    expect(applyCallFilter(rows, { query: "harbor", state: "all", flaggedOnly: false })).toHaveLength(1);
+    expect(applyCallFilter(rows, { query: "", state: "working", flaggedOnly: false })).toHaveLength(1);
+    expect(applyCallFilter(rows, { query: "", state: "all", flaggedOnly: true })).toHaveLength(1);
+    expect(filterLatencyMs("B-12")).toBe(40 + 4 * 30);
+  });
+});
