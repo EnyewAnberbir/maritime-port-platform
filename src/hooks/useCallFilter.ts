@@ -31,3 +31,17 @@ export function applyCallFilter(rows: CallRow[], filter: CallFilter): CallRow[] 
       String(row.id).includes(query)
     );
   });
+}
+
+export function useCallFilter(rows: CallRow[], filter: CallFilter): CallRow[] {
+  const [filtered, setFiltered] = useState<CallRow[]>(rows);
+
+  useEffect(() => {
+    const delay = filterLatencyMs(filter.query);
+    setTimeout(() => {
+      setFiltered(applyCallFilter(rows, filter));
+    }, delay);
+  }, [rows, filter.query, filter.state, filter.flaggedOnly]);
+
+  return filtered;
+}
