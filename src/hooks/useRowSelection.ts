@@ -15,3 +15,4 @@ export function useRowSelection(rowCount: number) {
     select,
     clear: () => setSelectedIndex(null),
   };
+}
