@@ -16,3 +16,23 @@ import { usePagination } from "../hooks/usePagination";
 import { usePort } from "../hooks/usePort";
 import { useRowSelection } from "../hooks/useRowSelection";
 import type { CallRow, CallState } from "../types/call";
+
+export function DeskPage() {
+  const { desk, revision } = usePort();
+  const { view, setView, focusedId, setFocusedId } = useFocus();
+  const rows = useMemo(() => desk.rows(), [desk, revision]);
+  const [filter, setFilter] = useState<CallFilter>({
+    query: "",
+    state: "all",
+    flaggedOnly: false,
+  });
+  const indexed = useMemo(() => {
+    if (!filter.query.trim()) {
+      return rows;
+    }
+    return desk.index.lookup(filter.query);
+  }, [desk, filter.query, rows]);
+  const filtered = useCallFilter(indexed, filter);
+  const paging = usePagination(filtered, 8);
+  const selection = useRowSelection(paging.slice.length);
+  const selectedRow =
