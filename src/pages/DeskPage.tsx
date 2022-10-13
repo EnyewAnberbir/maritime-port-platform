@@ -56,3 +56,22 @@ export function DeskPage() {
         {view === "calls" ? (
           <>
             <FilterBar
+              query={filter.query}
+              state={filter.state}
+              flaggedOnly={filter.flaggedOnly}
+              onQuery={(query) => setFilter((current) => ({ ...current, query }))}
+              onState={(state: CallState | "all") =>
+                setFilter((current) => ({ ...current, state }))
+              }
+              onFlaggedOnly={(flaggedOnly) =>
+                setFilter((current) => ({ ...current, flaggedOnly }))
+              }
+            />
+            {paging.slice.length === 0 ? (
+              <EmptyState
+                title="No calls in this cut"
+                detail="Relax the query, state, or flagged filter."
+              />
+            ) : (
+              <CallTable
+                rows={paging.slice}
