@@ -75,3 +75,23 @@ export function DeskPage() {
             ) : (
               <CallTable
                 rows={paging.slice}
+                selectedIndex={selection.selectedIndex}
+                onSelectIndex={selection.select}
+                onInspect={inspect}
+              />
+            )}
+            <Pager
+              page={paging.page}
+              pageCount={paging.pageCount}
+              onPrev={paging.prev}
+              onNext={paging.next}
+            />
+          </>
+        ) : null}
+        {view === "berths" ? <BerthPanel windows={desk.store.windows.all()} /> : null}
+        {view === "cargo" ? <CargoPanel dockets={desk.store.dockets.all()} /> : null}
+        {view === "customs" ? <CustomsPanel holds={desk.store.customs.all()} /> : null}
+        {view === "yard" ? <YardView desk={desk} /> : null}
+        {view === "export" ? <ExportPreview desk={desk} /> : null}
+      </main>
+      <div className="side-stack">
