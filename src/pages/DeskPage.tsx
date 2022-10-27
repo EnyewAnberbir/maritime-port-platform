@@ -95,3 +95,23 @@ export function DeskPage() {
         {view === "export" ? <ExportPreview desk={desk} /> : null}
       </main>
       <div className="side-stack">
+        <Inspector row={inspected} />
+        {view !== "berths" ? <BerthPanel windows={desk.store.windows.live()} /> : null}
+        {view !== "cargo" ? <CargoPanel dockets={desk.store.dockets.all().slice(0, 6)} /> : null}
+      </div>
+    </div>
+  );
+}
+
+function YardView({
+  desk,
+}: {
+  desk: { store: { yard: { occupied: () => Array<{ block: string; bay: number; row: number; tier: number; box: string | null }> } } };
+}) {
+  const slots = desk.store.yard.occupied();
+  if (slots.length === 0) {
+    return <EmptyState title="Yard is quiet" detail="No ISO boxes stacked under the RTGs." />;
+  }
+  return (
+    <section className="ledger-panel">
+      <h2>RTG stacks</h2>
