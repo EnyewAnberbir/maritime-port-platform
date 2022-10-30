@@ -115,3 +115,23 @@ function YardView({
   return (
     <section className="ledger-panel">
       <h2>RTG stacks</h2>
+      <ul>
+        {slots.map((slot) => (
+          <li key={`${slot.block}-${slot.bay}-${slot.row}-${slot.tier}`}>
+            {slot.block} {slot.bay}/{slot.row}/{slot.tier} · {slot.box}
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+
+function ExportPreview({ desk }: { desk: { store: Parameters<typeof exportMppk>[0] } }) {
+  const manifest = exportMppk(desk.store);
+  const hex = Array.from(manifest.bytes.slice(0, 16))
+    .map((byte) => byte.toString(16).padStart(2, "0"))
+    .join(" ");
+  return (
+    <section className="ledger-panel">
+      <h2>MPPK export</h2>
+      <p>calls {manifest.callCount}</p>
