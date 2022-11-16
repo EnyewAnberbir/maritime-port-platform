@@ -135,3 +135,9 @@ function ExportPreview({ desk }: { desk: { store: Parameters<typeof exportMppk>[
     <section className="ledger-panel">
       <h2>MPPK export</h2>
       <p>calls {manifest.callCount}</p>
+      <p>records {manifest.recordCount}</p>
+      <p>bytes {manifest.bytes.length}</p>
+      <p className="stamp">{hex}</p>
+    </section>
+  );
+}
