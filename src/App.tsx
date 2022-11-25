@@ -11,3 +11,19 @@ export function App() {
     <ErrorBoundary>
       <PortProvider>
         <FocusProvider>
+          <WiredApp />
+        </FocusProvider>
+      </PortProvider>
+    </ErrorBoundary>
+  );
+}
+
+function WiredApp() {
+  const { desk } = usePort();
+  return (
+    <AppShell generation={desk.store.generation} callCount={desk.view.callCount}>
+      <DeskPage />
+      <StatusBar metrics={desk.metrics.snapshot()} />
+    </AppShell>
+  );
+}
