@@ -21,3 +21,10 @@ export function FocusProvider({ children }: { children: ReactNode }) {
   return <FocusContext.Provider value={value}>{children}</FocusContext.Provider>;
 }
 
+export function useFocus(): FocusValue {
+  const value = useContext(FocusContext);
+  if (!value) {
+    throw new Error("useFocus must be used inside FocusProvider");
+  }
+  return value;
+}
