@@ -36,3 +36,23 @@ const SEED_COMMANDS: Command[] = [
   { type: "fileDocket", callId: 2, box: "MSCU2000001", isoSize: "40", vgmKg: 21450, tareKg: 3900, laden: true },
   { type: "fileDocket", callId: 2, box: "MSCU2000012", isoSize: "45", vgmKg: 3900, tareKg: 3900, laden: false },
   { type: "fileDocket", callId: 3, box: "MSCU3000004", isoSize: "20", vgmKg: 9800, tareKg: 2180, laden: true },
+  { type: "fileDocket", callId: 4, box: "MSCU4000006", isoSize: "40", vgmKg: 26100, tareKg: 4020, laden: true, hazmatClass: "8" },
+  { type: "fileDocket", callId: 7, box: "MSCU7000009", isoSize: "20", vgmKg: 7200, tareKg: 2100, laden: true },
+  { type: "fileDocket", callId: 9, box: "MSCU9000003", isoSize: "40", vgmKg: 15640, tareKg: 3850, laden: true },
+  { type: "gateIn", callId: 1, box: "MSCU1000007", chassis: "CH100001" },
+  { type: "gateIn", callId: 1, box: "MSCU1000018", chassis: "CH100002" },
+  { type: "gateIn", callId: 2, box: "MSCU2000001", chassis: "CH200001" },
+  { type: "stackBox", box: "MSCU1000007", block: "RTG-A", bay: 2, row: 1, tier: 1 },
+  { type: "stackBox", box: "MSCU2000001", block: "RTG-B", bay: 1, row: 2, tier: 1 },
+  { type: "holdCustoms", callId: 1, box: "MSCU1000018", reason: "IMDG class 3 inspect" },
+  { type: "seal", callId: 6 },
+  { type: "flag", callId: 4, flagged: true },
+];
+
+export function seedPortDesk(): PortDesk {
+  const desk = new PortDesk();
+  for (const command of SEED_COMMANDS) {
+    desk.dispatch(command);
+  }
+  if (desk.rows().length !== 16) {
+    throw new Error(`${SEED_NAME} seed must contain 16 vessel calls`);
