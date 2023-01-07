@@ -56,3 +56,10 @@ export function seedPortDesk(): PortDesk {
   }
   if (desk.rows().length !== 16) {
     throw new Error(`${SEED_NAME} seed must contain 16 vessel calls`);
+  }
+  return desk;
+}
+
+export function seedCommands(): Command[] {
+  return SEED_COMMANDS.map((command) => ({ ...command }));
+}
