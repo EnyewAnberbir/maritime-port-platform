@@ -30,3 +30,18 @@ export function assertReplayDeterministic(seed: FuzzSeed): void {
 
 export function assertExportStable(seed: FuzzSeed): void {
   const desk = runSeed(seed);
+  const rebuilt = replay(desk.journal.all());
+  const live = exportMppk(desk.store);
+  const after = exportMppk(rebuilt);
+  if (live.bytes.length !== after.bytes.length) {
+    throw new Error(`${seed.name}: export length changed after rebuild`);
+  }
+  for (let i = 0; i < live.bytes.length; i += 1) {
+    if (live.bytes[i] !== after.bytes[i]) {
+      throw new Error(`${seed.name}: export bytes changed after rebuild`);
+    }
+  }
+  if (desk.store.generation !== rebuilt.generation) {
+    throw new Error(`${seed.name}: store generation drifted during export compare`);
+  }
+}

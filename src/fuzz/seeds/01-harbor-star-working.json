@@ -1,0 +1,4 @@
+{
+  "name": "harbor-star-working",
+  "commands": [
+    { "type": "announce", "name": "Harbor Star", "imo": "9321483", "eta": "2015-03-11T06:00:00.000Z", "draftDm": 112 },
