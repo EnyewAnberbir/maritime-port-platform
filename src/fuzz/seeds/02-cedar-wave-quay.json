@@ -1,0 +1,10 @@
+{
+  "name": "cedar-wave-quay",
+  "commands": [
+    { "type": "announce", "name": "Cedar Wave", "imo": "9166778", "eta": "2015-03-11T09:30:00.000Z", "draftDm": 98 },
+    { "type": "assignBerth", "callId": 1, "berthId": "Q-3", "startMin": 90, "endMin": 480 },
+    { "type": "fileDocket", "callId": 1, "box": "MSCU2000001", "isoSize": "40", "vgmKg": 21450, "tareKg": 3900, "laden": true },
+    { "type": "gateIn", "callId": 1, "box": "MSCU2000001", "chassis": "CH200001" },
+    { "type": "stackBox", "box": "MSCU2000001", "block": "RTG-B", "bay": 1, "row": 2, "tier": 1 }
+  ]
+}

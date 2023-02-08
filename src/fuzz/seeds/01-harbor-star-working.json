@@ -2,3 +2,10 @@
   "name": "harbor-star-working",
   "commands": [
     { "type": "announce", "name": "Harbor Star", "imo": "9321483", "eta": "2015-03-11T06:00:00.000Z", "draftDm": 112 },
+    { "type": "assignBerth", "callId": 1, "berthId": "B-12", "startMin": 60, "endMin": 420 },
+    { "type": "advanceCall", "callId": 1, "next": "inbound" },
+    { "type": "advanceCall", "callId": 1, "next": "alongside" },
+    { "type": "advanceCall", "callId": 1, "next": "working" },
+    { "type": "fileDocket", "callId": 1, "box": "MSCU1000007", "isoSize": "40", "vgmKg": 18200, "tareKg": 3780, "laden": true }
+  ]
+}
