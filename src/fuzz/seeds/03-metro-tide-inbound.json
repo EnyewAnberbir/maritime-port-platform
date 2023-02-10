@@ -1,1 +1,9 @@
 {
+  "name": "metro-tide-inbound",
+  "commands": [
+    { "type": "announce", "name": "Metro Tide", "imo": "9311488", "eta": "2015-03-12T04:15:00.000Z", "draftDm": 121, "risk": "medium" },
+    { "type": "assignBerth", "callId": 1, "berthId": "B-12", "startMin": 480, "endMin": 900 },
+    { "type": "advanceCall", "callId": 1, "next": "inbound" },
+    { "type": "flag", "callId": 1, "flagged": true }
+  ]
+}

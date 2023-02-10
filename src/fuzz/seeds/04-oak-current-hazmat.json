@@ -1,0 +1,8 @@
+{
+  "name": "oak-current-hazmat",
+  "commands": [
+    { "type": "announce", "name": "Oak Current", "imo": "9108128", "eta": "2015-03-12T14:00:00.000Z", "draftDm": 105, "risk": "high" },
+    { "type": "fileDocket", "callId": 1, "box": "MSCU4000006", "isoSize": "40", "vgmKg": 26100, "tareKg": 4020, "laden": true, "hazmatClass": "8" },
+    { "type": "holdCustoms", "callId": 1, "box": "MSCU4000006", "reason": "IMDG class 8" }
+  ]
+}
