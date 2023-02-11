@@ -1,0 +1,8 @@
+{
+  "name": "iron-quay-seal",
+  "commands": [
+    { "type": "announce", "name": "Iron Quay", "imo": "9412347", "eta": "2015-03-13T18:20:00.000Z", "draftDm": 134 },
+    { "type": "seal", "callId": 1 },
+    { "type": "recover", "callId": 1 }
+  ]
+}

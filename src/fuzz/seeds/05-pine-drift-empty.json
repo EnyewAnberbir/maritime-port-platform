@@ -1,1 +1,8 @@
 {
+  "name": "pine-drift-empty",
+  "commands": [
+    { "type": "announce", "name": "Pine Drift", "imo": "9234563", "eta": "2015-03-13T02:40:00.000Z", "draftDm": 88 },
+    { "type": "fileDocket", "callId": 1, "box": "MSCU5000008", "isoSize": "20", "vgmKg": 2180, "tareKg": 2180, "laden": false },
+    { "type": "gateIn", "callId": 1, "box": "MSCU5000008", "chassis": "CH500001" }
+  ]
+}
