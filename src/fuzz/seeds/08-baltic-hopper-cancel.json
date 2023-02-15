@@ -1,0 +1,7 @@
+{
+  "name": "baltic-hopper-cancel",
+  "commands": [
+    { "type": "announce", "name": "Baltic Hopper", "imo": "8709872", "eta": "2015-03-14T21:00:00.000Z", "draftDm": 76 },
+    { "type": "advanceCall", "callId": 1, "next": "cancelled" }
+  ]
+}

@@ -1,3 +1,9 @@
 {
   "name": "silver-reach-hold-release",
   "commands": [
+    { "type": "announce", "name": "Silver Reach", "imo": "8501232", "eta": "2015-03-14T07:10:00.000Z", "draftDm": 91, "flagged": true },
+    { "type": "fileDocket", "callId": 1, "box": "MSCU7000009", "isoSize": "20", "vgmKg": 7200, "tareKg": 2100, "laden": true },
+    { "type": "holdCustoms", "callId": 1, "box": "MSCU7000009", "reason": "papers" },
+    { "type": "releaseCustoms", "holdId": 1, "releasedOn": "2015-03-14T12:00:00.000Z" }
+  ]
+}
