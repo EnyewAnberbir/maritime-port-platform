@@ -1,0 +1,11 @@
+{
+  "name": "north-beacon-compact",
+  "commands": [
+    { "type": "announce", "name": "North Beacon", "imo": "8802466", "eta": "2015-03-15T16:30:00.000Z", "draftDm": 102 },
+    { "type": "fileDocket", "callId": 1, "box": "MSCU1100005", "isoSize": "20", "vgmKg": 6400, "tareKg": 2100, "laden": true },
+    { "type": "gateIn", "callId": 1, "box": "MSCU1100005", "chassis": "CH110001" },
+    { "type": "stackBox", "box": "MSCU1100005", "block": "RTG-A", "bay": 3, "row": 2, "tier": 1 },
+    { "type": "loadBox", "box": "MSCU1100005" },
+    { "type": "compact" }
+  ]
+}

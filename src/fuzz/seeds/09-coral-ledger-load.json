@@ -3,3 +3,8 @@
   "commands": [
     { "type": "announce", "name": "Coral Ledger", "imo": "9601118", "eta": "2015-03-15T05:45:00.000Z", "draftDm": 118 },
     { "type": "assignBerth", "callId": 1, "berthId": "Q-3", "startMin": 1020, "endMin": 1440 },
+    { "type": "fileDocket", "callId": 1, "box": "MSCU9000003", "isoSize": "40", "vgmKg": 15640, "tareKg": 3850, "laden": true },
+    { "type": "gateIn", "callId": 1, "box": "MSCU9000003", "chassis": "CH900001" },
+    { "type": "loadBox", "box": "MSCU9000003" }
+  ]
+}
