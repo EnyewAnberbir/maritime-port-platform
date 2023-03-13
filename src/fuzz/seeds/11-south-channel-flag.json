@@ -1,2 +1,8 @@
 {
   "name": "south-channel-flag",
+  "commands": [
+    { "type": "announce", "name": "South Channel", "imo": "9000003", "eta": "2015-03-16T03:00:00.000Z", "draftDm": 109, "risk": "high", "flagged": true },
+    { "type": "assignBerth", "callId": 1, "berthId": "B-12", "startMin": 1500, "endMin": 1860 },
+    { "type": "flag", "callId": 1, "flagged": false }
+  ]
+}

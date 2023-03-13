@@ -1,0 +1,4 @@
+{
+  "name": "east-fender-depart",
+  "commands": [
+    { "type": "announce", "name": "East Fender", "imo": "9223344", "eta": "2015-03-17T01:50:00.000Z", "draftDm": 97 },

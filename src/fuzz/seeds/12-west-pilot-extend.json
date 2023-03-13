@@ -1,0 +1,8 @@
+{
+  "name": "west-pilot-extend",
+  "commands": [
+    { "type": "announce", "name": "West Pilot", "imo": "9112234", "eta": "2015-03-16T11:20:00.000Z", "draftDm": 84 },
+    { "type": "assignBerth", "callId": 1, "berthId": "Q-3", "startMin": 200, "endMin": 500 },
+    { "type": "extendWindow", "windowId": 1, "endMin": 700 }
+  ]
+}
