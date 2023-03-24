@@ -1,0 +1,10 @@
+{
+  "name": "tide-marker-two-boxes",
+  "commands": [
+    { "type": "announce", "name": "Tide Marker", "imo": "9334454", "eta": "2015-03-17T13:05:00.000Z", "draftDm": 126 },
+    { "type": "fileDocket", "callId": 1, "box": "MSCU1400002", "isoSize": "40", "vgmKg": 19000, "tareKg": 3800, "laden": true },
+    { "type": "fileDocket", "callId": 1, "box": "MSCU1400013", "isoSize": "20", "vgmKg": 11000, "tareKg": 2200, "laden": true, "hazmatClass": "3" },
+    { "type": "gateIn", "callId": 1, "box": "MSCU1400002", "chassis": "CH140001" },
+    { "type": "stackBox", "box": "MSCU1400002", "block": "RTG-A", "bay": 4, "row": 3, "tier": 1 }
+  ]
+}

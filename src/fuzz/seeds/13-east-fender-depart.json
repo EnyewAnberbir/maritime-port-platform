@@ -2,3 +2,9 @@
   "name": "east-fender-depart",
   "commands": [
     { "type": "announce", "name": "East Fender", "imo": "9223344", "eta": "2015-03-17T01:50:00.000Z", "draftDm": 97 },
+    { "type": "assignBerth", "callId": 1, "berthId": "B-12", "startMin": 10, "endMin": 200 },
+    { "type": "advanceCall", "callId": 1, "next": "inbound" },
+    { "type": "advanceCall", "callId": 1, "next": "alongside" },
+    { "type": "advanceCall", "callId": 1, "next": "departed" }
+  ]
+}
