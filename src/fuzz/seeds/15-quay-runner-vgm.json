@@ -1,2 +1,8 @@
 {
   "name": "quay-runner-vgm",
+  "commands": [
+    { "type": "announce", "name": "Quay Runner", "imo": "9445564", "eta": "2015-03-18T08:40:00.000Z", "draftDm": 93 },
+    { "type": "fileDocket", "callId": 1, "box": "MSCU1500000", "isoSize": "45", "vgmKg": 20500, "tareKg": 4100, "laden": true },
+    { "type": "declareVgm", "box": "MSCU1500000", "vgmKg": 22100 }
+  ]
+}

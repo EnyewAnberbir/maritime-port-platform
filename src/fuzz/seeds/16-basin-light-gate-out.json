@@ -1,0 +1,9 @@
+{
+  "name": "basin-light-gate-out",
+  "commands": [
+    { "type": "announce", "name": "Basin Light", "imo": "9556674", "eta": "2015-03-18T19:15:00.000Z", "draftDm": 111 },
+    { "type": "fileDocket", "callId": 1, "box": "MSCU1600001", "isoSize": "20", "vgmKg": 8000, "tareKg": 2100, "laden": true },
+    { "type": "gateIn", "callId": 1, "box": "MSCU1600001", "chassis": "CH160001" },
+    { "type": "gateOut", "callId": 1, "box": "MSCU1600001", "chassis": "CH160002" }
+  ]
+}
