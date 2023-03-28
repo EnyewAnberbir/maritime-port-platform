@@ -1,3 +1,9 @@
 {
   "name": "two-calls-two-berths",
   "commands": [
+    { "type": "announce", "name": "Harbor Star", "imo": "9321483", "eta": "2015-03-11T06:00:00.000Z", "draftDm": 112 },
+    { "type": "announce", "name": "Cedar Wave", "imo": "9166778", "eta": "2015-03-11T09:30:00.000Z", "draftDm": 98 },
+    { "type": "assignBerth", "callId": 1, "berthId": "B-12", "startMin": 0, "endMin": 300 },
+    { "type": "assignBerth", "callId": 2, "berthId": "Q-3", "startMin": 0, "endMin": 300 }
+  ]
+}

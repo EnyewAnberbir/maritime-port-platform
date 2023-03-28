@@ -1,0 +1,9 @@
+{
+  "name": "sequential-b12",
+  "commands": [
+    { "type": "announce", "name": "Metro Tide", "imo": "9311488", "eta": "2015-03-12T04:15:00.000Z", "draftDm": 121 },
+    { "type": "announce", "name": "Oak Current", "imo": "9108128", "eta": "2015-03-12T14:00:00.000Z", "draftDm": 105 },
+    { "type": "assignBerth", "callId": 1, "berthId": "B-12", "startMin": 0, "endMin": 240 },
+    { "type": "assignBerth", "callId": 2, "berthId": "B-12", "startMin": 240, "endMin": 480 }
+  ]
+}
