@@ -1,3 +1,12 @@
 {
   "name": "mixed-ops-three-calls",
   "commands": [
+    { "type": "announce", "name": "Pine Drift", "imo": "9234563", "eta": "2015-03-13T02:40:00.000Z", "draftDm": 88 },
+    { "type": "announce", "name": "Iron Quay", "imo": "9412347", "eta": "2015-03-13T18:20:00.000Z", "draftDm": 134 },
+    { "type": "announce", "name": "Silver Reach", "imo": "8501232", "eta": "2015-03-14T07:10:00.000Z", "draftDm": 91 },
+    { "type": "assignBerth", "callId": 1, "berthId": "Q-3", "startMin": 10, "endMin": 200 },
+    { "type": "fileDocket", "callId": 2, "box": "MSCU1900007", "isoSize": "40", "vgmKg": 17000, "tareKg": 3700, "laden": true },
+    { "type": "seal", "callId": 3 },
+    { "type": "flag", "callId": 2, "flagged": true }
+  ]
+}

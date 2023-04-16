@@ -1,0 +1,10 @@
+{
+  "name": "customs-then-stack",
+  "commands": [
+    { "type": "announce", "name": "Coral Ledger", "imo": "9601118", "eta": "2015-03-15T05:45:00.000Z", "draftDm": 118 },
+    { "type": "fileDocket", "callId": 1, "box": "MSCU2000008", "isoSize": "20", "vgmKg": 9100, "tareKg": 2200, "laden": true, "hazmatClass": "2.1" },
+    { "type": "gateIn", "callId": 1, "box": "MSCU2000008", "chassis": "CH200008" },
+    { "type": "holdCustoms", "callId": 1, "box": "MSCU2000008", "reason": "gas sniff" },
+    { "type": "releaseCustoms", "holdId": 1, "releasedOn": "2015-03-15T09:00:00.000Z" },
+    { "type": "stackBox", "box": "MSCU2000008", "block": "RTG-B", "bay": 2, "row": 1, "tier": 1 }
+  ]
