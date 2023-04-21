@@ -8,3 +8,4 @@
     { "type": "releaseCustoms", "holdId": 1, "releasedOn": "2015-03-15T09:00:00.000Z" },
     { "type": "stackBox", "box": "MSCU2000008", "block": "RTG-B", "bay": 2, "row": 1, "tier": 1 }
   ]
+}

@@ -1,0 +1,4 @@
+{
+  "name": "working-then-depart",
+  "commands": [
+    { "type": "announce", "name": "South Channel", "imo": "9000003", "eta": "2015-03-16T03:00:00.000Z", "draftDm": 109 },
