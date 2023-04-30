@@ -2,3 +2,10 @@
   "name": "working-then-depart",
   "commands": [
     { "type": "announce", "name": "South Channel", "imo": "9000003", "eta": "2015-03-16T03:00:00.000Z", "draftDm": 109 },
+    { "type": "assignBerth", "callId": 1, "berthId": "B-12", "startMin": 800, "endMin": 1100 },
+    { "type": "advanceCall", "callId": 1, "next": "inbound" },
+    { "type": "advanceCall", "callId": 1, "next": "alongside" },
+    { "type": "advanceCall", "callId": 1, "next": "working" },
+    { "type": "advanceCall", "callId": 1, "next": "departed" }
+  ]
+}

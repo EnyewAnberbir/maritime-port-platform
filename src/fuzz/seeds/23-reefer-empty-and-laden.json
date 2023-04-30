@@ -1,0 +1,10 @@
+{
+  "name": "reefer-empty-and-laden",
+  "commands": [
+    { "type": "announce", "name": "West Pilot", "imo": "9112234", "eta": "2015-03-16T11:20:00.000Z", "draftDm": 84 },
+    { "type": "fileDocket", "callId": 1, "box": "MSCU2300006", "isoSize": "40", "vgmKg": 3900, "tareKg": 3900, "laden": false },
+    { "type": "fileDocket", "callId": 1, "box": "MSCU2300017", "isoSize": "40", "vgmKg": 24800, "tareKg": 4100, "laden": true },
+    { "type": "gateIn", "callId": 1, "box": "MSCU2300017", "chassis": "CH230017" },
+    { "type": "stackBox", "box": "MSCU2300017", "block": "RTG-A", "bay": 6, "row": 4, "tier": 2 }
+  ]
+}
