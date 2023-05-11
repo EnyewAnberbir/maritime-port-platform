@@ -1,1 +1,14 @@
 {
+  "name": "four-vessels-mixed",
+  "commands": [
+    { "type": "announce", "name": "East Fender", "imo": "9223344", "eta": "2015-03-17T01:50:00.000Z", "draftDm": 97 },
+    { "type": "announce", "name": "Tide Marker", "imo": "9334454", "eta": "2015-03-17T13:05:00.000Z", "draftDm": 126 },
+    { "type": "announce", "name": "Quay Runner", "imo": "9445564", "eta": "2015-03-18T08:40:00.000Z", "draftDm": 93 },
+    { "type": "announce", "name": "Basin Light", "imo": "9556674", "eta": "2015-03-18T19:15:00.000Z", "draftDm": 111 },
+    { "type": "assignBerth", "callId": 1, "berthId": "B-12", "startMin": 0, "endMin": 180 },
+    { "type": "assignBerth", "callId": 2, "berthId": "Q-3", "startMin": 30, "endMin": 210 },
+    { "type": "fileDocket", "callId": 3, "box": "MSCU2400009", "isoSize": "20", "vgmKg": 7500, "tareKg": 2100, "laden": true },
+    { "type": "advanceCall", "callId": 4, "next": "cancelled" },
+    { "type": "seal", "callId": 3 }
+  ]
+}
