@@ -24,3 +24,22 @@ export function readU32LE(data: Uint8Array, offset: number): number {
     0
   );
 }
+
+export function encodeUtf8(text: string): Uint8Array {
+  return new TextEncoder().encode(text);
+}
+
+export function decodeUtf8(data: Uint8Array): string {
+  return new TextDecoder().decode(data);
+}
+
+export function concatBytes(chunks: Uint8Array[]): Uint8Array {
+  const total = chunks.reduce((sum, chunk) => sum + chunk.length, 0);
+  const out = new Uint8Array(total);
+  let cursor = 0;
+  for (const chunk of chunks) {
+    out.set(chunk, cursor);
+    cursor += chunk.length;
+  }
+  return out;
+}
