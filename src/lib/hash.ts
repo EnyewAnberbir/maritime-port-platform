@@ -18,3 +18,10 @@ export function fnv1a64Mix(seed: bigint, value: number): bigint {
 }
 
 export function durableId(parts: string[]): string {
+  const encoded = new TextEncoder().encode(parts.join("\u001f"));
+  return fnv1a64(encoded).toString(16).padStart(16, "0");
+}
+
+export function checksumToNumber(hash: bigint): number {
+  return Number(hash & 0xffffffffn);
+}
