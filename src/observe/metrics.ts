@@ -13,3 +13,23 @@ export class Metrics {
     callCount: 0,
     openHoldCount: 0,
     yardUsed: 0,
+    projectionLag: 0,
+    journalLength: 0,
+    compactPasses: 0,
+    exportBytes: 0,
+  };
+
+  snapshot(): PortMetrics {
+    return { ...this.values };
+  }
+
+  record(partial: Partial<PortMetrics>): PortMetrics {
+    this.values = { ...this.values, ...partial };
+    return this.snapshot();
+  }
+
+  bumpCompact(): number {
+    this.values.compactPasses += 1;
+    return this.values.compactPasses;
+  }
+
