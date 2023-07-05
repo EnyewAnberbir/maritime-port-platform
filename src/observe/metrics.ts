@@ -33,3 +33,8 @@ export class Metrics {
     return this.values.compactPasses;
   }
 
+  setLag(storeGeneration: number, viewGeneration: number): number {
+    this.values.projectionLag = Math.max(0, storeGeneration - viewGeneration);
+    return this.values.projectionLag;
+  }
+}
