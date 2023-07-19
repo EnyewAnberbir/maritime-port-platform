@@ -32,3 +32,23 @@ export function canCall(from: CallState, to: CallState): boolean {
 }
 
 export function canCargo(from: DocketState, to: DocketState): boolean {
+  return CARGO_EDGES[from].includes(to);
+}
+
+export function canBerth(from: WindowState, to: WindowState): boolean {
+  return BERTH_EDGES[from].includes(to);
+}
+
+export class TransitionPolicy {
+  rejectCall(from: CallState, to: CallState, verb: string): void {
+    if (!canCall(from, to)) {
+      throw new Error(`cannot ${verb} vessel ${from} -> ${to}`);
+    }
+  }
+
+  rejectCargo(from: DocketState, to: DocketState, verb: string): void {
+    if (!canCargo(from, to)) {
+      throw new Error(`cannot ${verb} cargo ${from} -> ${to}`);
+    }
+  }
+
