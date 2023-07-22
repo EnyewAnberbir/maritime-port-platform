@@ -52,3 +52,9 @@ export class TransitionPolicy {
     }
   }
 
+  rejectBerth(from: WindowState, to: WindowState, verb: string): void {
+    if (!canBerth(from, to)) {
+      throw new Error(`cannot ${verb} berth ${from} -> ${to}`);
+    }
+  }
+}
