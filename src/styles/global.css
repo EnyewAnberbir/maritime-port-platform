@@ -11,3 +11,23 @@
   --warn: #e0b25a;
   --danger: #d2665a;
   --info: #5aa8c8;
+  --high: #d2665a;
+  --medium: #e0b25a;
+  --low: #3dd6c6;
+  font-family: "Segoe UI", "IBM Plex Sans", "Source Sans 3", system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  min-height: 100%;
+  background:
+    radial-gradient(ellipse at 80% 0%, #0e3a4a 0%, transparent 42%),
+    linear-gradient(180deg, #08202c 0%, var(--bg) 68%);
+  color: var(--text);
+}
