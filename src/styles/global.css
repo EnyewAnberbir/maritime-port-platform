@@ -71,3 +71,23 @@ button[data-active="true"] {
 .status-bar {
   border-bottom: 0;
   border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 0.82rem;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.brand {
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-size: 0.92rem;
+}
+
+.stamp {
+  color: var(--muted);
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+}
+
+.desk {
