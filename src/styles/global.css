@@ -91,3 +91,23 @@ button[data-active="true"] {
 }
 
 .desk {
+  display: grid;
+  grid-template-columns: 9rem 1fr 18rem;
+  min-height: 0;
+}
+
+.desk-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 1rem 0.7rem;
+  border-right: 1px solid var(--line);
+  background: #071a24;
+}
+
+.desk-main {
+  padding: 1rem;
+  overflow: auto;
+}
+
+.side-stack {
