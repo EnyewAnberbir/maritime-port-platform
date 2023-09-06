@@ -111,3 +111,23 @@ button[data-active="true"] {
 }
 
 .side-stack {
+  border-left: 1px solid var(--line);
+  padding: 1rem 0.85rem;
+  overflow: auto;
+  background: #07161e;
+}
+
+.metric-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+}
+
+.metric-card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  padding: 0.65rem 0.75rem;
+}
+
+.metric-card span {
