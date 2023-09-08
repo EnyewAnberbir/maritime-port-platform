@@ -131,3 +131,23 @@ button[data-active="true"] {
 }
 
 .metric-card span {
+  display: block;
+  color: var(--muted);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.metric-card strong {
+  font-size: 1.35rem;
+}
+
+.filter-bar {
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+  margin-bottom: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.filter-bar input[type="search"],
