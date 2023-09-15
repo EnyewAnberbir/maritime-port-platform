@@ -151,3 +151,23 @@ button[data-active="true"] {
 }
 
 .filter-bar input[type="search"],
+.filter-bar select {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  padding: 0.35rem 0.55rem;
+  min-width: 16rem;
+}
+
+.call-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--panel);
+}
+
+.call-table th,
+.call-table td {
+  text-align: left;
+  padding: 0.4rem 0.55rem;
+  border-bottom: 1px solid var(--line);
+  font-size: 0.92rem;
+}
