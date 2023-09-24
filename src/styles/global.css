@@ -171,3 +171,23 @@ button[data-active="true"] {
   border-bottom: 1px solid var(--line);
   font-size: 0.92rem;
 }
+
+.call-table tr[data-selected="true"] {
+  background: #123848;
+}
+
+.flagged {
+  color: var(--warn);
+}
+
+.severity-high,
+.severity-medium,
+.severity-low {
+  display: inline-block;
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 50%;
+}
+
+.severity-high {
+  background: var(--high);
