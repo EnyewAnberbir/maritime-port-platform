@@ -191,3 +191,23 @@ button[data-active="true"] {
 
 .severity-high {
   background: var(--high);
+}
+
+.severity-medium {
+  background: var(--medium);
+}
+
+.severity-low {
+  background: var(--low);
+}
+
+.inspector,
+.ledger-panel,
+.empty-state,
+.error-boundary {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  padding: 0.8rem;
+  margin-bottom: 0.75rem;
+}
+
