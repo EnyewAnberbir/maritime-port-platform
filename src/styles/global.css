@@ -230,3 +230,9 @@ button[data-active="true"] {
   gap: 0.6rem;
   align-items: center;
   margin-top: 0.75rem;
+}
+
+button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
