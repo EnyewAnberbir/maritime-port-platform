@@ -27,3 +27,12 @@ export function runCompactJob(job: CompactJob, slots: YardSlot[]): CompactJob {
   }
   const live = slots.filter((slot) => slot.box || !slot.abandoned);
   const dropped = slots.length - live.length;
+  return {
+    id: job.id,
+    stage: "done",
+    inputHash,
+    kept: live.length,
+    dropped,
+    slots: live.map((slot) => ({ ...slot, abandoned: false })),
+  };
+}
